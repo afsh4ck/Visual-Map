@@ -1,22 +1,3 @@
-import createMiddleware from 'next-intl/middleware';
- 
-export const locales = ['en', 'es'] as const;
-export const localePrefix = 'always';
- 
-export default createMiddleware({
-  defaultLocale: 'es',
-  locales,
-  localePrefix
-});
- 
-export const config = {
-  // Match only internationalized pathnames
-  matcher: [
-    '/',
-    '/(en|es)/:path*',
-    // Match all pathnames except for
-    // - … if they start with `/api`, `/_next` or `/_vercel`
-    // - … the ones containing a dot (e.g. `favicon.ico`)
-    '/((?!api|_next|_vercel|.*\\..*).*)'
-  ]
-};
+version https://git-lfs.github.com/spec/v1
+oid sha256:03521454aeaf2626e09ba42e5c1ade89a68c41886313f45ba806dd4e4c88fb65
+size 552
