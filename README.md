@@ -24,7 +24,8 @@ cd Visual-Map
 # Instalar dependencias
 npm install
 
-# Configurar tu API de Gemini (Necesario para generar pasos de pentesting)
+# Configurar tu API de Gemini 
+# Necesario para generar descripción de cada host y pasos de pentesting
 nano .env
 GEMINI_API_KEY={your-gemini-api-key}
 
