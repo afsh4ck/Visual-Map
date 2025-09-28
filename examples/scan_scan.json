@@ -1,0 +1,5683 @@
+{
+  "fileName": "scan.xml",
+  "hosts": [
+    {
+      "status": {
+        "state": "up",
+        "reason": "syn-ack",
+        "reason_ttl": 52
+      },
+      "address": {
+        "addr": "10.0.0.1",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "win-legacy01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "msrpc"
+            },
+            "protocol": "tcp",
+            "portid": 135
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "netbios-ssn"
+            },
+            "protocol": "tcp",
+            "portid": 139
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "microsoft-ds",
+              "product": "Windows Server",
+              "version": "2008 R2",
+              "method": "probed",
+              "conf": 10
+            },
+            "script": [
+              {
+                "id": "smb-vuln-eternalblue",
+                "output": "SMBv1 habilitado; RCE preauth. CVE-2017-0144 (EternalBlue). severity: CRITICAL; cvss:9.8"
+              },
+              {
+                "id": "smb-vuln-smbghost",
+                "output": "Compresión SMBv3 vulnerable a RCE. CVE-2020-0796 (SMBGhost). severity: CRITICAL; cvss:10.0"
+              },
+              {
+                "id": "smb-signing",
+                "output": "SMB signing deshabilitado; MITM posible. severity: HIGH; cvss:8.1"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 445
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ms-wbt-server",
+              "version": 6.1
+            },
+            "script": [
+              {
+                "id": "rdp-config",
+                "output": "NLA deshabilitada; credenciales susceptibles a fuerza bruta. severity: HIGH; cvss:8.2"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 3389
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Windows Server 2008 R2",
+          "accuracy": 95
+        }
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "missing-patches",
+            "output": "Boletines críticos pendientes (rollups 2017–2019). severity: CRITICAL"
+          }
+        ]
+      },
+      "riskScore": 100,
+      "riskFactors": [
+        "Critical port 445 (microsoft-ds) is open",
+        "Detailed service version exposed on port 445 (Windows Server)",
+        "Potential vulnerability found by NSE script 'smb-vuln-eternalblue' on port 445",
+        "Potential vulnerability found by NSE script 'smb-vuln-smbghost' on port 445",
+        "Critical port 3389 (ms-wbt-server) is open"
+      ]
+    },
+    {
+      "status": {
+        "state": "up",
+        "reason": "syn-ack"
+      },
+      "address": {
+        "addr": "10.0.0.2",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "rdp-gw01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ms-wbt-server",
+              "product": "Remote Desktop Services",
+              "version": 6.3
+            },
+            "script": [
+              {
+                "id": "rdp-bluekeep",
+                "output": "RDP susceptible a RCE preautenticada. CVE-2019-0708 (BlueKeep). severity: CRITICAL; cvss:9.8"
+              },
+              {
+                "id": "rdp-nla",
+                "output": "NLA inconsistente; TLS obsoleto negociado. severity: HIGH; cvss:8.0"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 3389
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "microsoft-ds"
+            },
+            "script": [
+              {
+                "id": "printnightmare",
+                "output": "Servicio de impresión vulnerable a escalada/RCE. CVE-2021-34527 (PrintNightmare). severity: CRITICAL; cvss:8.8"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 445
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "winrm-http"
+            },
+            "script": [
+              {
+                "id": "winrm-basic",
+                "output": "WinRM con Basic auth; sin TLS forzado. severity: HIGH; cvss:8.1"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 5985
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Windows Server 2012/2012 R2",
+          "accuracy": 90
+        }
+      },
+      "riskScore": 100,
+      "riskFactors": [
+        "Critical port 3389 (ms-wbt-server) is open",
+        "Detailed service version exposed on port 3389 (Remote Desktop Services)",
+        "Critical port 445 (microsoft-ds) is open"
+      ]
+    },
+    {
+      "status": {
+        "state": "up",
+        "reason": "syn-ack"
+      },
+      "address": {
+        "addr": "10.0.0.7",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "gitlab01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "https",
+              "product": "GitLab",
+              "version": 11.11
+            },
+            "script": [
+              {
+                "id": "cve-2018-19571",
+                "output": "Directory traversal/SSRF. severity: HIGH; cvss:8.6"
+              },
+              {
+                "id": "cve-2021-22205",
+                "output": "Procesamiento de imágenes (ExifTool) ➜ RCE potencial en ciertas rutas. severity: HIGH; cvss:9.9"
+              },
+              {
+                "id": "signup-open",
+                "output": "Registro abierto; enumeración de usuarios. severity: MEDIUM; cvss:5.3"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 443
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ssh"
+            },
+            "protocol": "tcp",
+            "portid": 22
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 4.x",
+          "accuracy": 85
+        }
+      },
+      "riskScore": 100,
+      "riskFactors": [
+        "Critical port 443 (https) is open",
+        "Detailed service version exposed on port 443 (GitLab)",
+        "Critical port 22 (ssh) is open"
+      ]
+    },
+    {
+      "status": {
+        "state": "up",
+        "reason": "syn-ack"
+      },
+      "address": {
+        "addr": "10.0.0.9",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "db01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "mysql",
+              "product": "MySQL",
+              "version": "5.6.35"
+            },
+            "script": [
+              {
+                "id": "weak-auth",
+                "output": "Contraseñas débiles/por defecto detectadas. severity: HIGH; cvss:8.1"
+              },
+              {
+                "id": "mysql-grants",
+                "output": "Grants excesivos para 'appuser'@'%.corp.local'. severity: HIGH; cvss:7.8"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 3306
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ssh"
+            },
+            "protocol": "tcp",
+            "portid": 22
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "phpMyAdmin"
+            },
+            "script": [
+              {
+                "id": "pma-exposed",
+                "output": "phpMyAdmin expuesto sin restricción de IP. severity: HIGH; cvss:8.0"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 8080
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 3.x",
+          "accuracy": 70
+        }
+      },
+      "riskScore": 100,
+      "riskFactors": [
+        "Critical port 3306 (mysql) is open",
+        "Detailed service version exposed on port 3306 (MySQL)",
+        "Critical port 22 (ssh) is open",
+        "Critical port 8080 (http) is open",
+        "Detailed service version exposed on port 8080 (phpMyAdmin)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.11",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "web02.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "nginx",
+              "version": "1.14.0"
+            },
+            "protocol": "tcp",
+            "portid": 80
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "https",
+              "product": "nginx",
+              "version": "1.14.0"
+            },
+            "protocol": "tcp",
+            "portid": 443
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "TLS 1.0/1.1 habilitado. severity: MEDIUM; cvss:5.6"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 4.x",
+          "accuracy": 85
+        }
+      },
+      "riskScore": 100,
+      "riskFactors": [
+        "Critical port 80 (http) is open",
+        "Detailed service version exposed on port 80 (nginx)",
+        "Critical port 443 (https) is open",
+        "Detailed service version exposed on port 443 (nginx)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.30",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "web05.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "IIS",
+              "version": 8.5
+            },
+            "protocol": "tcp",
+            "portid": 80
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "https",
+              "product": "IIS",
+              "version": 8.5
+            },
+            "protocol": "tcp",
+            "portid": 443
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Archivos por defecto de IIS expuestos. severity: LOW; cvss:3.4"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Windows Server 2012",
+          "accuracy": 90
+        }
+      },
+      "riskScore": 100,
+      "riskFactors": [
+        "Critical port 80 (http) is open",
+        "Detailed service version exposed on port 80 (IIS)",
+        "Critical port 443 (https) is open",
+        "Detailed service version exposed on port 443 (IIS)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.50",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "gateway01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "RouterOS",
+              "version": 6
+            },
+            "protocol": "tcp",
+            "portid": 80
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "https",
+              "product": "RouterOS",
+              "version": 6
+            },
+            "protocol": "tcp",
+            "portid": 443
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ssh",
+              "product": "Dropbear 2018.76"
+            },
+            "protocol": "tcp",
+            "portid": 22
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Interfaz admin sólo accesible desde mgmt. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "RouterOS",
+          "accuracy": 80
+        }
+      },
+      "riskScore": 100,
+      "riskFactors": [
+        "Critical port 80 (http) is open",
+        "Detailed service version exposed on port 80 (RouterOS)",
+        "Critical port 443 (https) is open",
+        "Detailed service version exposed on port 443 (RouterOS)",
+        "Critical port 22 (ssh) is open",
+        "Detailed service version exposed on port 22 (Dropbear 2018.76)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up",
+        "reason": "syn-ack"
+      },
+      "address": {
+        "addr": "10.0.0.3",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "ci-master01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "Jenkins",
+              "version": 2.15
+            },
+            "script": [
+              {
+                "id": "cve-2018-1000861",
+                "output": "RCE en Stapler/Script Console. severity: CRITICAL; cvss:9.8"
+              },
+              {
+                "id": "cve-2019-1003000",
+                "output": "Sandbox Groovy bypass ➜ RCE. severity: CRITICAL; cvss:9.8"
+              },
+              {
+                "id": "anon-read",
+                "output": "Vista anónima habilitada; fuga de jobs/credenciales ofuscadas. severity: HIGH; cvss:8.0"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 8080
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "jenkins-remoting"
+            },
+            "script": [
+              {
+                "id": "remoting",
+                "output": "Canal JNLP sin endurecer; hijack de agentes posible. severity: HIGH; cvss:8.6"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 50000
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ssh"
+            },
+            "script": [
+              {
+                "id": "ssh-auth",
+                "output": "Password auth habilitada; sin MFA. severity: HIGH; cvss:7.5"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 22
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 3.x/4.x",
+          "accuracy": 80
+        }
+      },
+      "riskScore": 99,
+      "riskFactors": [
+        "Critical port 8080 (http) is open",
+        "Detailed service version exposed on port 8080 (Jenkins)",
+        "Critical port 22 (ssh) is open"
+      ]
+    },
+    {
+      "status": {
+        "state": "up",
+        "reason": "syn-ack"
+      },
+      "address": {
+        "addr": "10.0.0.4",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "app-struts01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "Apache httpd",
+              "version": "2.4.7"
+            },
+            "script": [
+              {
+                "id": "cve-2017-5638",
+                "output": "Struts2 Content-Type OGNL RCE. severity: CRITICAL; cvss:10.0"
+              },
+              {
+                "id": "cve-2018-11776",
+                "output": "Struts2 namespace RCE. severity: CRITICAL; cvss:9.8"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 80
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "Apache Tomcat",
+              "version": "8.0.32"
+            },
+            "script": [
+              {
+                "id": "tomcat-manager",
+                "output": "Manager deploy accesible; credenciales débiles. severity: HIGH; cvss:8.8"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 8080
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "https-alt"
+            },
+            "script": [
+              {
+                "id": "tls-old",
+                "output": "Permite TLS 1.0/1.1 y ciphers débiles. severity: MEDIUM; cvss:5.6"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 8443
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 3.x",
+          "accuracy": 80
+        }
+      },
+      "riskScore": 86,
+      "riskFactors": [
+        "Critical port 80 (http) is open",
+        "Detailed service version exposed on port 80 (Apache httpd)",
+        "Critical port 8080 (http) is open",
+        "Detailed service version exposed on port 8080 (Apache Tomcat)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up",
+        "reason": "syn-ack"
+      },
+      "address": {
+        "addr": "10.0.0.5",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "exchange01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "https",
+              "product": "Microsoft Exchange",
+              "version": 2016
+            },
+            "script": [
+              {
+                "id": "proxylogon",
+                "output": "SSRF ➜ RCE (ProxyLogon). CVE-2021-26855 (+ encadenadas). severity: CRITICAL; cvss:9.8"
+              },
+              {
+                "id": "proxyshell",
+                "output": "ProxyShell (RCE vía Autodiscover/PowerShell). CVE-2021-34473/34523/31207. severity: CRITICAL; cvss:9.8"
+              },
+              {
+                "id": "owa-autodiscover",
+                "output": "Autodiscover mal configurado; fuga de credenciales. severity: HIGH; cvss:8.2"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 443
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "smtp",
+              "product": "Exchange SMTP"
+            },
+            "script": [
+              {
+                "id": "smtp-auth",
+                "output": "Permite AUTH mecanismos heredados. severity: MEDIUM; cvss:5.0"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 25
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Windows Server 2016",
+          "accuracy": 88
+        }
+      },
+      "riskScore": 86,
+      "riskFactors": [
+        "Critical port 443 (https) is open",
+        "Detailed service version exposed on port 443 (Microsoft Exchange)",
+        "Critical port 25 (smtp) is open",
+        "Detailed service version exposed on port 25 (Exchange SMTP)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.48",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "testbed01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ftp"
+            },
+            "protocol": "tcp",
+            "portid": 21
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http"
+            },
+            "protocol": "tcp",
+            "portid": 80
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Servicios legacy aislados en VLAN. severity: LOW; cvss:3.3"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Various legacy OS",
+          "accuracy": 40
+        }
+      },
+      "riskScore": 80,
+      "riskFactors": [
+        "Critical port 21 (ftp) is open",
+        "Critical port 80 (http) is open"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.16",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "mail01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "smtp",
+              "product": "Postfix",
+              "version": "2.11.3"
+            },
+            "protocol": "tcp",
+            "portid": 25
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "imap",
+              "product": "Dovecot",
+              "version": "2.2.13"
+            },
+            "protocol": "tcp",
+            "portid": 143
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "SPF/DMARC ausentes. severity: LOW; cvss:3.1"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 3.x",
+          "accuracy": 75
+        }
+      },
+      "riskScore": 70,
+      "riskFactors": [
+        "Critical port 25 (smtp) is open",
+        "Detailed service version exposed on port 25 (Postfix)",
+        "Critical port 143 (imap) is open",
+        "Detailed service version exposed on port 143 (Dovecot)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up",
+        "reason": "syn-ack"
+      },
+      "address": {
+        "addr": "10.0.0.6",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "docker-host01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "docker",
+              "product": "Docker Engine",
+              "version": 1.12
+            },
+            "script": [
+              {
+                "id": "docker-noauth",
+                "output": "API sin TLS/autenticación; control del daemon. severity: CRITICAL; cvss:9.8"
+              },
+              {
+                "id": "docker-sock",
+                "output": "Montajes /var/run/docker.sock desde contenedores. riesgo de escape. severity: CRITICAL; cvss:9.6"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 2375
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "redis",
+              "version": 3
+            },
+            "script": [
+              {
+                "id": "redis-open",
+                "output": "Redis sin auth; escritura de claves remotas. severity: HIGH; cvss:8.8"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 6379
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ssh"
+            },
+            "script": [
+              {
+                "id": "weak-kex",
+                "output": "Intercambios de clave débiles permitidos. severity: MEDIUM; cvss:5.9"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 22
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 4.x",
+          "accuracy": 85
+        }
+      },
+      "riskScore": 67,
+      "riskFactors": [
+        "Detailed service version exposed on port 2375 (Docker Engine)",
+        "Critical port 22 (ssh) is open"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.33",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "git-mirror01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ssh",
+              "product": "OpenSSH"
+            },
+            "protocol": "tcp",
+            "portid": 22
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "SSH banners detallan versión. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 80
+        }
+      },
+      "riskScore": 67,
+      "riskFactors": [
+        "Critical port 22 (ssh) is open",
+        "Detailed service version exposed on port 22 (OpenSSH)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.41",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "dev01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ssh",
+              "product": "OpenSSH 7.2p2"
+            },
+            "protocol": "tcp",
+            "portid": 22
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Permite autenticación por password. severity: MEDIUM; cvss:6.5"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 4.x",
+          "accuracy": 80
+        }
+      },
+      "riskScore": 67,
+      "riskFactors": [
+        "Critical port 22 (ssh) is open",
+        "Detailed service version exposed on port 22 (OpenSSH 7.2p2)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.45",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "router-core.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ssh",
+              "product": "Dropbear 2018.76"
+            },
+            "protocol": "tcp",
+            "portid": 22
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Firmwares pendientes de actualización. severity: LOW; cvss:4.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Embedded",
+          "accuracy": 75
+        }
+      },
+      "riskScore": 67,
+      "riskFactors": [
+        "Critical port 22 (ssh) is open",
+        "Detailed service version exposed on port 22 (Dropbear 2018.76)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.47",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "db-replica02.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "mysql",
+              "product": "MySQL 5.5"
+            },
+            "protocol": "tcp",
+            "portid": 3306
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Replicación segura con usuario dedicado. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 70
+        }
+      },
+      "riskScore": 67,
+      "riskFactors": [
+        "Critical port 3306 (mysql) is open",
+        "Detailed service version exposed on port 3306 (MySQL 5.5)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.49",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "vnc-lab01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "vnc",
+              "product": "TightVNC 1.3"
+            },
+            "protocol": "tcp",
+            "portid": 5900
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "VNC con contraseña robusta requerida. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 55
+        }
+      },
+      "riskScore": 67,
+      "riskFactors": [
+        "Critical port 5900 (vnc) is open",
+        "Detailed service version exposed on port 5900 (TightVNC 1.3)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.29",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "file01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "netbios-ssn"
+            },
+            "protocol": "tcp",
+            "portid": 139
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "microsoft-ds"
+            },
+            "protocol": "tcp",
+            "portid": 445
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "SMB signing opcional. severity: MEDIUM; cvss:6.5"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Windows 10",
+          "accuracy": 88
+        }
+      },
+      "riskScore": 64,
+      "riskFactors": [
+        "Critical port 445 (microsoft-ds) is open"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.36",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "build01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ssh"
+            },
+            "protocol": "tcp",
+            "portid": 22
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Autenticación por contraseña habilitada. severity: MEDIUM; cvss:6.5"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 85
+        }
+      },
+      "riskScore": 64,
+      "riskFactors": [
+        "Critical port 22 (ssh) is open"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.19",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "iot01.office.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "telnet",
+              "product": "BusyBox telnetd"
+            },
+            "protocol": "tcp",
+            "portid": 23
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Telnet sin cifrado habilitado. severity: MEDIUM; cvss:6.9"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Embedded Linux",
+          "accuracy": 60
+        }
+      },
+      "riskScore": 51,
+      "riskFactors": [
+        "Critical port 23 (telnet) is open",
+        "Detailed service version exposed on port 23 (BusyBox telnetd)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.25",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "web04.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "https",
+              "product": "Apache httpd",
+              "version": "2.4.18"
+            },
+            "protocol": "tcp",
+            "portid": 443
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Ciphers débiles (RC4) aceptados. severity: MEDIUM; cvss:5.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 4.x",
+          "accuracy": 83
+        }
+      },
+      "riskScore": 51,
+      "riskFactors": [
+        "Critical port 443 (https) is open",
+        "Detailed service version exposed on port 443 (Apache httpd)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.26",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "printer02.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "HP JetDirect"
+            },
+            "protocol": "tcp",
+            "portid": 80
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Panel admin sin HTTPS. severity: LOW; cvss:3.2"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Embedded",
+          "accuracy": 55
+        }
+      },
+      "riskScore": 51,
+      "riskFactors": [
+        "Critical port 80 (http) is open",
+        "Detailed service version exposed on port 80 (HP JetDirect)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.35",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "edge-fw01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "https",
+              "product": "EdgeOS",
+              "version": 1.1
+            },
+            "protocol": "tcp",
+            "portid": 443
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Firmware desactualizado (no crítico). severity: LOW; cvss:4.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Embedded",
+          "accuracy": 75
+        }
+      },
+      "riskScore": 51,
+      "riskFactors": [
+        "Critical port 443 (https) is open",
+        "Detailed service version exposed on port 443 (EdgeOS)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.46",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "kiosk01.office.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "lighttpd",
+              "version": "1.4.35"
+            },
+            "protocol": "tcp",
+            "portid": 80
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Modo debug desactivado. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux embedded",
+          "accuracy": 60
+        }
+      },
+      "riskScore": 51,
+      "riskFactors": [
+        "Critical port 80 (http) is open",
+        "Detailed service version exposed on port 80 (lighttpd)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.24",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "db-replica01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "postgresql",
+              "version": 9.3
+            },
+            "protocol": "tcp",
+            "portid": 5432
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "pg_hba.conf con 'trust' en segmento interno. severity: MEDIUM; cvss:7.1"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 70
+        }
+      },
+      "riskScore": 48,
+      "riskFactors": [
+        "Critical port 5432 (postgresql) is open"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.21",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "web03.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "Apache Tomcat",
+              "version": "7.0.52"
+            },
+            "protocol": "tcp",
+            "portid": 8080
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Listado de directorios habilitado. severity: LOW; cvss:3.1"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 3.x",
+          "accuracy": 80
+        }
+      },
+      "riskScore": 35,
+      "riskFactors": [
+        "Critical port 8080 (http) is open",
+        "Detailed service version exposed on port 8080 (Apache Tomcat)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.34",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "exchange-edge.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "smtp",
+              "product": "Exchange SMTP"
+            },
+            "protocol": "tcp",
+            "portid": 25
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "STARTTLS disponible; preferir TLS1.2+. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Windows Server 2012",
+          "accuracy": 88
+        }
+      },
+      "riskScore": 35,
+      "riskFactors": [
+        "Critical port 25 (smtp) is open",
+        "Detailed service version exposed on port 25 (Exchange SMTP)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.38",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "proxy02.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http-proxy",
+              "product": "Squid",
+              "version": "3.3.8"
+            },
+            "protocol": "tcp",
+            "portid": 8080
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "No fuerza autenticación en rutas internas. severity: MEDIUM; cvss:5.8"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 75
+        }
+      },
+      "riskScore": 35,
+      "riskFactors": [
+        "Critical port 8080 (http-proxy) is open",
+        "Detailed service version exposed on port 8080 (Squid)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.44",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "legacyftp.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ftp",
+              "product": "vsftpd",
+              "version": "2.3.4"
+            },
+            "protocol": "tcp",
+            "portid": 21
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "FTP anónimo deshabilitado. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 2.6",
+          "accuracy": 60
+        }
+      },
+      "riskScore": 35,
+      "riskFactors": [
+        "Critical port 21 (ftp) is open",
+        "Detailed service version exposed on port 21 (vsftpd)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up",
+        "reason": "syn-ack"
+      },
+      "address": {
+        "addr": "10.0.0.10",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "monitoring01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "Grafana",
+              "version": 5
+            },
+            "script": [
+              {
+                "id": "grafana-admin",
+                "output": "Usuario admin por defecto detectado. severity: HIGH; cvss:8.2"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 3000
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "Prometheus",
+              "version": 2
+            },
+            "script": [
+              {
+                "id": "prom-metrics",
+                "output": "Métricas sin auth; tokens/labels sensibles. severity: HIGH; cvss:8.0"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 9090
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "Alertmanager"
+            },
+            "script": [
+              {
+                "id": "alertmanager",
+                "output": "Silencios/receivers visibles; posible abuso. severity: MEDIUM; cvss:6.5"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 9093
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 4.x",
+          "accuracy": 82
+        }
+      },
+      "riskScore": 9,
+      "riskFactors": [
+        "Detailed service version exposed on port 3000 (Grafana)",
+        "Detailed service version exposed on port 9090 (Prometheus)",
+        "Detailed service version exposed on port 9093 (Alertmanager)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up",
+        "reason": "syn-ack"
+      },
+      "address": {
+        "addr": "10.0.0.8",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "ldap01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ldap",
+              "product": "OpenLDAP",
+              "version": "2.4.40"
+            },
+            "script": [
+              {
+                "id": "anon-bind",
+                "output": "Bind anónimo habilitado; lectura de atributos sensibles. severity: HIGH; cvss:8.0"
+              },
+              {
+                "id": "weak-acl",
+                "output": "ACLs permisivas en OU=ServiceAccounts. severity: HIGH; cvss:8.2"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 389
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ldaps",
+              "product": "OpenLDAP"
+            },
+            "script": [
+              {
+                "id": "tls-config",
+                "output": "LDAPS permite TLS1.0 y suites débiles. severity: MEDIUM; cvss:5.6"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 636
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 3.x",
+          "accuracy": 75
+        }
+      },
+      "riskScore": 6,
+      "riskFactors": [
+        "Detailed service version exposed on port 389 (OpenLDAP)",
+        "Detailed service version exposed on port 636 (OpenLDAP)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.13",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "proxy01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http-proxy",
+              "product": "Squid",
+              "version": 3.5
+            },
+            "protocol": "tcp",
+            "portid": 3128
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Proxy permite métodos inseguros; cachea cabeceras. severity: MEDIUM; cvss:5.3"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 75
+        }
+      },
+      "riskScore": 3,
+      "riskFactors": [
+        "Detailed service version exposed on port 3128 (Squid)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.15",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "app02.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "https-alt",
+              "product": "Tomcat",
+              "version": "8.0.32"
+            },
+            "protocol": "tcp",
+            "portid": 8443
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Tomcat sample apps accesibles. severity: MEDIUM; cvss:5.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 3.x/4.x",
+          "accuracy": 80
+        }
+      },
+      "riskScore": 3,
+      "riskFactors": [
+        "Detailed service version exposed on port 8443 (Tomcat)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.18",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "sensor01.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "snmp",
+              "product": "net-snmp",
+              "version": "5.7.2"
+            },
+            "protocol": "udp",
+            "portid": 161
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "SNMPv1 community 'public'. severity: MEDIUM; cvss:6.4"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Embedded",
+          "accuracy": 60
+        }
+      },
+      "riskScore": 3,
+      "riskFactors": [
+        "Detailed service version exposed on port 161 (net-snmp)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.23",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "registry01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "Docker Registry",
+              "version": 2.4
+            },
+            "protocol": "tcp",
+            "portid": 5000
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Permite pull sin autenticación (imágenes públicas). severity: LOW; cvss:3.7"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 80
+        }
+      },
+      "riskScore": 3,
+      "riskFactors": [
+        "Detailed service version exposed on port 5000 (Docker Registry)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.39",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "analytics01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "Elasticsearch",
+              "version": "2.3.5"
+            },
+            "protocol": "tcp",
+            "portid": 9200
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Cluster expone endpoints de info. severity: MEDIUM; cvss:6.3"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 80
+        }
+      },
+      "riskScore": 3,
+      "riskFactors": [
+        "Detailed service version exposed on port 9200 (Elasticsearch)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.40",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "grafana02.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "Grafana",
+              "version": 6
+            },
+            "protocol": "tcp",
+            "portid": 3000
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Cuenta admin con contraseña fuerte requerida. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 82
+        }
+      },
+      "riskScore": 3,
+      "riskFactors": [
+        "Detailed service version exposed on port 3000 (Grafana)"
+      ]
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.12",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "cache01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "memcached",
+              "version": "1.4.5"
+            },
+            "protocol": "tcp",
+            "portid": 11211
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "UDP de memcached habilitado (amplificación). severity: MEDIUM; cvss:5.9"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 2.6",
+          "accuracy": 60
+        }
+      },
+      "riskScore": 0,
+      "riskFactors": []
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.14",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "printer01.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "jetdirect"
+            },
+            "protocol": "tcp",
+            "portid": 9100
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Credenciales por defecto en UI. severity: LOW; cvss:3.7"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Embedded",
+          "accuracy": 60
+        }
+      },
+      "riskScore": 0,
+      "riskFactors": []
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.17",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "backup01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "rsync",
+              "version": "3.1.0"
+            },
+            "protocol": "tcp",
+            "portid": 873
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Módulo rsync legible sin auth. severity: MEDIUM; cvss:6.5"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 3.x",
+          "accuracy": 70
+        }
+      },
+      "riskScore": 0,
+      "riskFactors": []
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.20",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "k8s-worker01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "kubelet"
+            },
+            "protocol": "tcp",
+            "portid": 10250
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Kubelet métricas sin auth (read-only). severity: MEDIUM; cvss:6.5"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 80
+        }
+      },
+      "riskScore": 0,
+      "riskFactors": []
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.22",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "vpn-legacy.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "pptp"
+            },
+            "protocol": "tcp",
+            "portid": 1723
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "PPTP (MS-CHAPv2) débil. severity: MEDIUM; cvss:6.1"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 50
+        }
+      },
+      "riskScore": 0,
+      "riskFactors": []
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.27",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "media01.office.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "rtsp"
+            },
+            "protocol": "tcp",
+            "portid": 554
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Stream RTSP accesible con credenciales débiles. severity: MEDIUM; cvss:6.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 60
+        }
+      },
+      "riskScore": 0,
+      "riskFactors": []
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.28",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "vpn02.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "openvpn",
+              "version": 2.3
+            },
+            "protocol": "udp",
+            "portid": 1194
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Versión OpenVPN obsoleta. severity: LOW; cvss:4.3"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux embedded",
+          "accuracy": 60
+        }
+      },
+      "riskScore": 0,
+      "riskFactors": []
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.31",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "storage01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "nfs",
+              "version": 3
+            },
+            "protocol": "tcp",
+            "portid": 2049
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Export NFS de solo lectura sin restricción granular. severity: LOW; cvss:3.6"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "FreeBSD",
+          "accuracy": 65
+        }
+      },
+      "riskScore": 0,
+      "riskFactors": []
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.32",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "ci-runner01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "node-exporter"
+            },
+            "protocol": "tcp",
+            "portid": 9100
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Node exporter accesible; info de sistema. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 70
+        }
+      },
+      "riskScore": 0,
+      "riskFactors": []
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.37",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "scada01.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "modbus"
+            },
+            "protocol": "tcp",
+            "portid": 502
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Protocolo industrial expuesto. severity: MEDIUM; cvss:7.1"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "RTOS/Embedded",
+          "accuracy": 50
+        }
+      },
+      "riskScore": 0,
+      "riskFactors": []
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.42",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "docker-host02.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "docker-tls"
+            },
+            "protocol": "tcp",
+            "portid": 2376
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Docker API con TLS; certificados de CA interna. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 5.x",
+          "accuracy": 85
+        }
+      },
+      "riskScore": 0,
+      "riskFactors": []
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.43",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "vpn-client01.office.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ipsec-nat-t"
+            },
+            "protocol": "udp",
+            "portid": 4500
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Cliente IPsec expuesto solo a puertos necesarios. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Windows 10",
+          "accuracy": 85
+        }
+      },
+      "riskScore": 0,
+      "riskFactors": []
+    }
+  ],
+  "originalHosts": [
+    {
+      "status": {
+        "state": "up",
+        "reason": "syn-ack",
+        "reason_ttl": 52
+      },
+      "address": {
+        "addr": "10.0.0.1",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "win-legacy01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "msrpc"
+            },
+            "protocol": "tcp",
+            "portid": 135
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "netbios-ssn"
+            },
+            "protocol": "tcp",
+            "portid": 139
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "microsoft-ds",
+              "product": "Windows Server",
+              "version": "2008 R2",
+              "method": "probed",
+              "conf": 10
+            },
+            "script": [
+              {
+                "id": "smb-vuln-eternalblue",
+                "output": "SMBv1 habilitado; RCE preauth. CVE-2017-0144 (EternalBlue). severity: CRITICAL; cvss:9.8"
+              },
+              {
+                "id": "smb-vuln-smbghost",
+                "output": "Compresión SMBv3 vulnerable a RCE. CVE-2020-0796 (SMBGhost). severity: CRITICAL; cvss:10.0"
+              },
+              {
+                "id": "smb-signing",
+                "output": "SMB signing deshabilitado; MITM posible. severity: HIGH; cvss:8.1"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 445
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ms-wbt-server",
+              "version": 6.1
+            },
+            "script": [
+              {
+                "id": "rdp-config",
+                "output": "NLA deshabilitada; credenciales susceptibles a fuerza bruta. severity: HIGH; cvss:8.2"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 3389
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Windows Server 2008 R2",
+          "accuracy": 95
+        }
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "missing-patches",
+            "output": "Boletines críticos pendientes (rollups 2017–2019). severity: CRITICAL"
+          }
+        ]
+      }
+    },
+    {
+      "status": {
+        "state": "up",
+        "reason": "syn-ack"
+      },
+      "address": {
+        "addr": "10.0.0.2",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "rdp-gw01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ms-wbt-server",
+              "product": "Remote Desktop Services",
+              "version": 6.3
+            },
+            "script": [
+              {
+                "id": "rdp-bluekeep",
+                "output": "RDP susceptible a RCE preautenticada. CVE-2019-0708 (BlueKeep). severity: CRITICAL; cvss:9.8"
+              },
+              {
+                "id": "rdp-nla",
+                "output": "NLA inconsistente; TLS obsoleto negociado. severity: HIGH; cvss:8.0"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 3389
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "microsoft-ds"
+            },
+            "script": [
+              {
+                "id": "printnightmare",
+                "output": "Servicio de impresión vulnerable a escalada/RCE. CVE-2021-34527 (PrintNightmare). severity: CRITICAL; cvss:8.8"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 445
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "winrm-http"
+            },
+            "script": [
+              {
+                "id": "winrm-basic",
+                "output": "WinRM con Basic auth; sin TLS forzado. severity: HIGH; cvss:8.1"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 5985
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Windows Server 2012/2012 R2",
+          "accuracy": 90
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up",
+        "reason": "syn-ack"
+      },
+      "address": {
+        "addr": "10.0.0.3",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "ci-master01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "Jenkins",
+              "version": 2.15
+            },
+            "script": [
+              {
+                "id": "cve-2018-1000861",
+                "output": "RCE en Stapler/Script Console. severity: CRITICAL; cvss:9.8"
+              },
+              {
+                "id": "cve-2019-1003000",
+                "output": "Sandbox Groovy bypass ➜ RCE. severity: CRITICAL; cvss:9.8"
+              },
+              {
+                "id": "anon-read",
+                "output": "Vista anónima habilitada; fuga de jobs/credenciales ofuscadas. severity: HIGH; cvss:8.0"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 8080
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "jenkins-remoting"
+            },
+            "script": [
+              {
+                "id": "remoting",
+                "output": "Canal JNLP sin endurecer; hijack de agentes posible. severity: HIGH; cvss:8.6"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 50000
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ssh"
+            },
+            "script": [
+              {
+                "id": "ssh-auth",
+                "output": "Password auth habilitada; sin MFA. severity: HIGH; cvss:7.5"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 22
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 3.x/4.x",
+          "accuracy": 80
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up",
+        "reason": "syn-ack"
+      },
+      "address": {
+        "addr": "10.0.0.4",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "app-struts01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "Apache httpd",
+              "version": "2.4.7"
+            },
+            "script": [
+              {
+                "id": "cve-2017-5638",
+                "output": "Struts2 Content-Type OGNL RCE. severity: CRITICAL; cvss:10.0"
+              },
+              {
+                "id": "cve-2018-11776",
+                "output": "Struts2 namespace RCE. severity: CRITICAL; cvss:9.8"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 80
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "Apache Tomcat",
+              "version": "8.0.32"
+            },
+            "script": [
+              {
+                "id": "tomcat-manager",
+                "output": "Manager deploy accesible; credenciales débiles. severity: HIGH; cvss:8.8"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 8080
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "https-alt"
+            },
+            "script": [
+              {
+                "id": "tls-old",
+                "output": "Permite TLS 1.0/1.1 y ciphers débiles. severity: MEDIUM; cvss:5.6"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 8443
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 3.x",
+          "accuracy": 80
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up",
+        "reason": "syn-ack"
+      },
+      "address": {
+        "addr": "10.0.0.5",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "exchange01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "https",
+              "product": "Microsoft Exchange",
+              "version": 2016
+            },
+            "script": [
+              {
+                "id": "proxylogon",
+                "output": "SSRF ➜ RCE (ProxyLogon). CVE-2021-26855 (+ encadenadas). severity: CRITICAL; cvss:9.8"
+              },
+              {
+                "id": "proxyshell",
+                "output": "ProxyShell (RCE vía Autodiscover/PowerShell). CVE-2021-34473/34523/31207. severity: CRITICAL; cvss:9.8"
+              },
+              {
+                "id": "owa-autodiscover",
+                "output": "Autodiscover mal configurado; fuga de credenciales. severity: HIGH; cvss:8.2"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 443
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "smtp",
+              "product": "Exchange SMTP"
+            },
+            "script": [
+              {
+                "id": "smtp-auth",
+                "output": "Permite AUTH mecanismos heredados. severity: MEDIUM; cvss:5.0"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 25
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Windows Server 2016",
+          "accuracy": 88
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up",
+        "reason": "syn-ack"
+      },
+      "address": {
+        "addr": "10.0.0.6",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "docker-host01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "docker",
+              "product": "Docker Engine",
+              "version": 1.12
+            },
+            "script": [
+              {
+                "id": "docker-noauth",
+                "output": "API sin TLS/autenticación; control del daemon. severity: CRITICAL; cvss:9.8"
+              },
+              {
+                "id": "docker-sock",
+                "output": "Montajes /var/run/docker.sock desde contenedores. riesgo de escape. severity: CRITICAL; cvss:9.6"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 2375
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "redis",
+              "version": 3
+            },
+            "script": [
+              {
+                "id": "redis-open",
+                "output": "Redis sin auth; escritura de claves remotas. severity: HIGH; cvss:8.8"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 6379
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ssh"
+            },
+            "script": [
+              {
+                "id": "weak-kex",
+                "output": "Intercambios de clave débiles permitidos. severity: MEDIUM; cvss:5.9"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 22
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 4.x",
+          "accuracy": 85
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up",
+        "reason": "syn-ack"
+      },
+      "address": {
+        "addr": "10.0.0.7",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "gitlab01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "https",
+              "product": "GitLab",
+              "version": 11.11
+            },
+            "script": [
+              {
+                "id": "cve-2018-19571",
+                "output": "Directory traversal/SSRF. severity: HIGH; cvss:8.6"
+              },
+              {
+                "id": "cve-2021-22205",
+                "output": "Procesamiento de imágenes (ExifTool) ➜ RCE potencial en ciertas rutas. severity: HIGH; cvss:9.9"
+              },
+              {
+                "id": "signup-open",
+                "output": "Registro abierto; enumeración de usuarios. severity: MEDIUM; cvss:5.3"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 443
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ssh"
+            },
+            "protocol": "tcp",
+            "portid": 22
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 4.x",
+          "accuracy": 85
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up",
+        "reason": "syn-ack"
+      },
+      "address": {
+        "addr": "10.0.0.8",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "ldap01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ldap",
+              "product": "OpenLDAP",
+              "version": "2.4.40"
+            },
+            "script": [
+              {
+                "id": "anon-bind",
+                "output": "Bind anónimo habilitado; lectura de atributos sensibles. severity: HIGH; cvss:8.0"
+              },
+              {
+                "id": "weak-acl",
+                "output": "ACLs permisivas en OU=ServiceAccounts. severity: HIGH; cvss:8.2"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 389
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ldaps",
+              "product": "OpenLDAP"
+            },
+            "script": [
+              {
+                "id": "tls-config",
+                "output": "LDAPS permite TLS1.0 y suites débiles. severity: MEDIUM; cvss:5.6"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 636
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 3.x",
+          "accuracy": 75
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up",
+        "reason": "syn-ack"
+      },
+      "address": {
+        "addr": "10.0.0.9",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "db01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "mysql",
+              "product": "MySQL",
+              "version": "5.6.35"
+            },
+            "script": [
+              {
+                "id": "weak-auth",
+                "output": "Contraseñas débiles/por defecto detectadas. severity: HIGH; cvss:8.1"
+              },
+              {
+                "id": "mysql-grants",
+                "output": "Grants excesivos para 'appuser'@'%.corp.local'. severity: HIGH; cvss:7.8"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 3306
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ssh"
+            },
+            "protocol": "tcp",
+            "portid": 22
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "phpMyAdmin"
+            },
+            "script": [
+              {
+                "id": "pma-exposed",
+                "output": "phpMyAdmin expuesto sin restricción de IP. severity: HIGH; cvss:8.0"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 8080
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 3.x",
+          "accuracy": 70
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up",
+        "reason": "syn-ack"
+      },
+      "address": {
+        "addr": "10.0.0.10",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "monitoring01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "Grafana",
+              "version": 5
+            },
+            "script": [
+              {
+                "id": "grafana-admin",
+                "output": "Usuario admin por defecto detectado. severity: HIGH; cvss:8.2"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 3000
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "Prometheus",
+              "version": 2
+            },
+            "script": [
+              {
+                "id": "prom-metrics",
+                "output": "Métricas sin auth; tokens/labels sensibles. severity: HIGH; cvss:8.0"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 9090
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "Alertmanager"
+            },
+            "script": [
+              {
+                "id": "alertmanager",
+                "output": "Silencios/receivers visibles; posible abuso. severity: MEDIUM; cvss:6.5"
+              }
+            ],
+            "protocol": "tcp",
+            "portid": 9093
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 4.x",
+          "accuracy": 82
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.11",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "web02.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "nginx",
+              "version": "1.14.0"
+            },
+            "protocol": "tcp",
+            "portid": 80
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "https",
+              "product": "nginx",
+              "version": "1.14.0"
+            },
+            "protocol": "tcp",
+            "portid": 443
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "TLS 1.0/1.1 habilitado. severity: MEDIUM; cvss:5.6"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 4.x",
+          "accuracy": 85
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.12",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "cache01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "memcached",
+              "version": "1.4.5"
+            },
+            "protocol": "tcp",
+            "portid": 11211
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "UDP de memcached habilitado (amplificación). severity: MEDIUM; cvss:5.9"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 2.6",
+          "accuracy": 60
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.13",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "proxy01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http-proxy",
+              "product": "Squid",
+              "version": 3.5
+            },
+            "protocol": "tcp",
+            "portid": 3128
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Proxy permite métodos inseguros; cachea cabeceras. severity: MEDIUM; cvss:5.3"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 75
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.14",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "printer01.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "jetdirect"
+            },
+            "protocol": "tcp",
+            "portid": 9100
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Credenciales por defecto en UI. severity: LOW; cvss:3.7"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Embedded",
+          "accuracy": 60
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.15",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "app02.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "https-alt",
+              "product": "Tomcat",
+              "version": "8.0.32"
+            },
+            "protocol": "tcp",
+            "portid": 8443
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Tomcat sample apps accesibles. severity: MEDIUM; cvss:5.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 3.x/4.x",
+          "accuracy": 80
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.16",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "mail01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "smtp",
+              "product": "Postfix",
+              "version": "2.11.3"
+            },
+            "protocol": "tcp",
+            "portid": 25
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "imap",
+              "product": "Dovecot",
+              "version": "2.2.13"
+            },
+            "protocol": "tcp",
+            "portid": 143
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "SPF/DMARC ausentes. severity: LOW; cvss:3.1"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 3.x",
+          "accuracy": 75
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.17",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "backup01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "rsync",
+              "version": "3.1.0"
+            },
+            "protocol": "tcp",
+            "portid": 873
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Módulo rsync legible sin auth. severity: MEDIUM; cvss:6.5"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 3.x",
+          "accuracy": 70
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.18",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "sensor01.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "snmp",
+              "product": "net-snmp",
+              "version": "5.7.2"
+            },
+            "protocol": "udp",
+            "portid": 161
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "SNMPv1 community 'public'. severity: MEDIUM; cvss:6.4"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Embedded",
+          "accuracy": 60
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.19",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "iot01.office.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "telnet",
+              "product": "BusyBox telnetd"
+            },
+            "protocol": "tcp",
+            "portid": 23
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Telnet sin cifrado habilitado. severity: MEDIUM; cvss:6.9"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Embedded Linux",
+          "accuracy": 60
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.20",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "k8s-worker01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "kubelet"
+            },
+            "protocol": "tcp",
+            "portid": 10250
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Kubelet métricas sin auth (read-only). severity: MEDIUM; cvss:6.5"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 80
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.21",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "web03.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "Apache Tomcat",
+              "version": "7.0.52"
+            },
+            "protocol": "tcp",
+            "portid": 8080
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Listado de directorios habilitado. severity: LOW; cvss:3.1"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 3.x",
+          "accuracy": 80
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.22",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "vpn-legacy.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "pptp"
+            },
+            "protocol": "tcp",
+            "portid": 1723
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "PPTP (MS-CHAPv2) débil. severity: MEDIUM; cvss:6.1"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 50
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.23",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "registry01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "Docker Registry",
+              "version": 2.4
+            },
+            "protocol": "tcp",
+            "portid": 5000
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Permite pull sin autenticación (imágenes públicas). severity: LOW; cvss:3.7"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 80
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.24",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "db-replica01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "postgresql",
+              "version": 9.3
+            },
+            "protocol": "tcp",
+            "portid": 5432
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "pg_hba.conf con 'trust' en segmento interno. severity: MEDIUM; cvss:7.1"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 70
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.25",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "web04.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "https",
+              "product": "Apache httpd",
+              "version": "2.4.18"
+            },
+            "protocol": "tcp",
+            "portid": 443
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Ciphers débiles (RC4) aceptados. severity: MEDIUM; cvss:5.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 4.x",
+          "accuracy": 83
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.26",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "printer02.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "HP JetDirect"
+            },
+            "protocol": "tcp",
+            "portid": 80
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Panel admin sin HTTPS. severity: LOW; cvss:3.2"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Embedded",
+          "accuracy": 55
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.27",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "media01.office.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "rtsp"
+            },
+            "protocol": "tcp",
+            "portid": 554
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Stream RTSP accesible con credenciales débiles. severity: MEDIUM; cvss:6.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 60
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.28",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "vpn02.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "openvpn",
+              "version": 2.3
+            },
+            "protocol": "udp",
+            "portid": 1194
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Versión OpenVPN obsoleta. severity: LOW; cvss:4.3"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux embedded",
+          "accuracy": 60
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.29",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "file01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "netbios-ssn"
+            },
+            "protocol": "tcp",
+            "portid": 139
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "microsoft-ds"
+            },
+            "protocol": "tcp",
+            "portid": 445
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "SMB signing opcional. severity: MEDIUM; cvss:6.5"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Windows 10",
+          "accuracy": 88
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.30",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "web05.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "IIS",
+              "version": 8.5
+            },
+            "protocol": "tcp",
+            "portid": 80
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "https",
+              "product": "IIS",
+              "version": 8.5
+            },
+            "protocol": "tcp",
+            "portid": 443
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Archivos por defecto de IIS expuestos. severity: LOW; cvss:3.4"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Windows Server 2012",
+          "accuracy": 90
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.31",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "storage01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "nfs",
+              "version": 3
+            },
+            "protocol": "tcp",
+            "portid": 2049
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Export NFS de solo lectura sin restricción granular. severity: LOW; cvss:3.6"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "FreeBSD",
+          "accuracy": 65
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.32",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "ci-runner01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "node-exporter"
+            },
+            "protocol": "tcp",
+            "portid": 9100
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Node exporter accesible; info de sistema. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 70
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.33",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "git-mirror01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ssh",
+              "product": "OpenSSH"
+            },
+            "protocol": "tcp",
+            "portid": 22
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "SSH banners detallan versión. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 80
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.34",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "exchange-edge.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "smtp",
+              "product": "Exchange SMTP"
+            },
+            "protocol": "tcp",
+            "portid": 25
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "STARTTLS disponible; preferir TLS1.2+. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Windows Server 2012",
+          "accuracy": 88
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.35",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "edge-fw01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "https",
+              "product": "EdgeOS",
+              "version": 1.1
+            },
+            "protocol": "tcp",
+            "portid": 443
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Firmware desactualizado (no crítico). severity: LOW; cvss:4.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Embedded",
+          "accuracy": 75
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.36",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "build01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ssh"
+            },
+            "protocol": "tcp",
+            "portid": 22
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Autenticación por contraseña habilitada. severity: MEDIUM; cvss:6.5"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 85
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.37",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "scada01.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "modbus"
+            },
+            "protocol": "tcp",
+            "portid": 502
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Protocolo industrial expuesto. severity: MEDIUM; cvss:7.1"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "RTOS/Embedded",
+          "accuracy": 50
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.38",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "proxy02.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http-proxy",
+              "product": "Squid",
+              "version": "3.3.8"
+            },
+            "protocol": "tcp",
+            "portid": 8080
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "No fuerza autenticación en rutas internas. severity: MEDIUM; cvss:5.8"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 75
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.39",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "analytics01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "Elasticsearch",
+              "version": "2.3.5"
+            },
+            "protocol": "tcp",
+            "portid": 9200
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Cluster expone endpoints de info. severity: MEDIUM; cvss:6.3"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 80
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.40",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "grafana02.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "Grafana",
+              "version": 6
+            },
+            "protocol": "tcp",
+            "portid": 3000
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Cuenta admin con contraseña fuerte requerida. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 82
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.41",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "dev01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ssh",
+              "product": "OpenSSH 7.2p2"
+            },
+            "protocol": "tcp",
+            "portid": 22
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Permite autenticación por password. severity: MEDIUM; cvss:6.5"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 4.x",
+          "accuracy": 80
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.42",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "docker-host02.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "docker-tls"
+            },
+            "protocol": "tcp",
+            "portid": 2376
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Docker API con TLS; certificados de CA interna. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 5.x",
+          "accuracy": 85
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.43",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "vpn-client01.office.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ipsec-nat-t"
+            },
+            "protocol": "udp",
+            "portid": 4500
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Cliente IPsec expuesto solo a puertos necesarios. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Windows 10",
+          "accuracy": 85
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.44",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "legacyftp.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ftp",
+              "product": "vsftpd",
+              "version": "2.3.4"
+            },
+            "protocol": "tcp",
+            "portid": 21
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "FTP anónimo deshabilitado. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux 2.6",
+          "accuracy": 60
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.45",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "router-core.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ssh",
+              "product": "Dropbear 2018.76"
+            },
+            "protocol": "tcp",
+            "portid": 22
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Firmwares pendientes de actualización. severity: LOW; cvss:4.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Embedded",
+          "accuracy": 75
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.46",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "kiosk01.office.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "lighttpd",
+              "version": "1.4.35"
+            },
+            "protocol": "tcp",
+            "portid": 80
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Modo debug desactivado. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux embedded",
+          "accuracy": 60
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.47",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "db-replica02.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "mysql",
+              "product": "MySQL 5.5"
+            },
+            "protocol": "tcp",
+            "portid": 3306
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Replicación segura con usuario dedicado. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 70
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.48",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "testbed01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ftp"
+            },
+            "protocol": "tcp",
+            "portid": 21
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http"
+            },
+            "protocol": "tcp",
+            "portid": 80
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Servicios legacy aislados en VLAN. severity: LOW; cvss:3.3"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Various legacy OS",
+          "accuracy": 40
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.49",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "vnc-lab01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "vnc",
+              "product": "TightVNC 1.3"
+            },
+            "protocol": "tcp",
+            "portid": 5900
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "VNC con contraseña robusta requerida. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "Linux",
+          "accuracy": 55
+        }
+      }
+    },
+    {
+      "status": {
+        "state": "up"
+      },
+      "address": {
+        "addr": "10.0.0.50",
+        "addrtype": "ipv4"
+      },
+      "hostnames": {
+        "hostname": [
+          {
+            "name": "gateway01.corp.local",
+            "type": "user"
+          }
+        ]
+      },
+      "ports": {
+        "port": [
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "http",
+              "product": "RouterOS",
+              "version": 6
+            },
+            "protocol": "tcp",
+            "portid": 80
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "https",
+              "product": "RouterOS",
+              "version": 6
+            },
+            "protocol": "tcp",
+            "portid": 443
+          },
+          {
+            "state": {
+              "state": "open"
+            },
+            "service": {
+              "name": "ssh",
+              "product": "Dropbear 2018.76"
+            },
+            "protocol": "tcp",
+            "portid": 22
+          }
+        ]
+      },
+      "hostscript": {
+        "script": [
+          {
+            "id": "vuln",
+            "output": "Interfaz admin sólo accesible desde mgmt. severity: INFO; cvss:0.0"
+          }
+        ]
+      },
+      "os": {
+        "osmatch": {
+          "name": "RouterOS",
+          "accuracy": 80
+        }
+      }
+    }
+  ],
+  "summary": {
+    "hostCount": 50,
+    "openPorts": 75,
+    "uniqueServices": 35
+  }
+}
