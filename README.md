@@ -19,9 +19,14 @@ Esta aplicación incluye un módulo de inteligencia artificial para priorizar lo
 ```bash
 # Clona el repositorio
 git clone https://github.com/afsh4ck/Visual-Map.git
+cd Visual-Map
 
 # Instalar dependencias
 npm install
+
+# Configurar tu API de Gemini (Necesario para generar pasos de pentesting)
+nano .env
+GEMINI_API_KEY={your-gemini-api-key}
 
 # Ejecuta el servidor de desarrollo
 npm run dev
