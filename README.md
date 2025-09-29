@@ -2,8 +2,7 @@
 
 Visual Map es una plataforma web Next.js que te permite subir escaneos XML de Nmap y visualizar hosts, puertos abiertos y servicios de una manera gráfica y amigable. Esta aplicación incluye un módulo de inteligencia artificial para priorizar los hosts más vulnerables, facilitando la identificación y solución de riesgos de seguridad en grandes escaneos de red.
 
-<img width="3805" height="1718" alt="image" src="https://github.com/user-attachments/assets/ba48a245-34b5-432b-89be-22b3a159e852" />
-
+<img width="3804" height="1725" alt="image" src="https://github.com/user-attachments/assets/23cb1db5-dc3b-4800-8fcb-15eb5273fc8e" />
 
 ## Características
 
@@ -51,13 +50,12 @@ Abre [http://localhost:9002](http://localhost:9002) en tu navegador para ver el 
 ### Subida de escaneo XML
 **Sube un archivo XML de Nmap:** Arrastra y suelta tu archivo de resultados de escaneo de Nmap (en formato `.xml`) en la zona de carga, o haz clic para seleccionar un archivo.
 
-<img width="3838" height="1686" alt="image" src="https://github.com/user-attachments/assets/18023d45-94e1-4840-86ff-f305ef1e16d7" />
-
+<img width="3838" height="1674" alt="image" src="https://github.com/user-attachments/assets/cf2403f5-75fa-4369-b0da-898faf09680a" />
 
 ### Dashboard Principal
 **Visualiza el Dashboard:** Una vez que el archivo se procesa, aparecerá el dashboard mostrando un resumen del escaneo.
 
-<img width="3805" height="1718" alt="image" src="https://github.com/user-attachments/assets/ea5adab6-e8f1-4d45-bd44-73157df858df" />
+<img width="3804" height="1725" alt="image" src="https://github.com/user-attachments/assets/4f5e40d9-de31-45d1-afa4-95f1721f363a" />
 
 ### Hosts más vulnerables
 **Analiza las Vulnerabilidades Principales:** El panel "Hosts Más Vulnerables" muestra los hosts con las puntuaciones de riesgo más altas. Haz clic en un host para ver una explicación generada por IA de sus vulnerabilidades.
@@ -67,7 +65,7 @@ Abre [http://localhost:9002](http://localhost:9002) en tu navegador para ver el 
 ### Todos los hosts
 **Explora Todos los Hosts:** Utiliza la tabla principal para navegar, ordenar y buscar entre todos los hosts del escaneo.
 
-<img width="3802" height="1724" alt="image" src="https://github.com/user-attachments/assets/6c5f2bcd-4b74-4df3-b825-d399a18e6e95" />
+<img width="3805" height="1724" alt="image" src="https://github.com/user-attachments/assets/5ed43c20-f93e-48d7-8860-c41e12b5020a" />
 
 ### Detalles de host
 **Consulta los Detalles de cada Host:** Haz clic en cualquier host de la tabla para abrir una vista detallada con todos sus puertos y servicios asociados. Además se generará con IA una descripción y los próximos pasos de pentesting (para esto es necesario proporcionar vuestra API de Gemini editando el archivo .env)
