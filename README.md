@@ -8,8 +8,8 @@ Visual Map es una plataforma web Next.js que te permite subir escaneos XML de Nm
 
 - **Carga y Análisis:** Arrastra y suelta archivos XML de Nmap para un análisis y visualización instantáneos.
 - **Dashboard Interactivo:** Visualiza estadísticas resumidas, una lista clasificada de hosts vulnerables y una tabla detallada de todos los hosts escaneados.
-- **Puntuación de Riesgo:** Un sistema impulsado por IA puntúa y clasifica los hosts por vulnerabilidad, con explicaciones para los hosts de mayor riesgo.
-- **Vista Detallada de Host:** Haz clic en cualquier host para ver sus puertos abiertos, servicios, versiones y los resultados de los scripts de NSE.
+- **Puntuación de Riesgo:** Un sistema impulsado por IA puntúa y clasifica los hosts por vulnerabilidad, priorizando los más vulnerables.
+- **Vista Detallada de Host:** Haz clic en cualquier host para ver sus puertos abiertos, servicios, versiones, una descripción con IA y pasos de explotación.
 - **Modo Claro y Oscuro:** Un selector de tema persistente y fácil de usar para tu comodidad visual.
 - **Diseño Adaptable:** Totalmente adaptable y accesible, diseñado para su uso tanto en escritorio como en dispositivos móviles.
 - **Procesamiento Local:** Todo el procesamiento se realiza en tu navegador. Tus datos de escaneo nunca salen de tu máquina.
