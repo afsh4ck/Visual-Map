@@ -62,6 +62,36 @@ function getScripts(item: Port | Host): Script[] {
 }
 
 
+export function calculatePortRiskScore(port: Port, weights: RiskWeights): number {
+    let score = 0;
+    const portId = parseInt(port.portid, 10);
+
+    // Score for critical ports
+    if (CRITICAL_PORTS[portId]) {
+      score += (CRITICAL_PORTS[portId] / 25) * weights.criticalPorts;
+    }
+
+    // Score for service version info
+    if (port.service?.product) {
+      score += (5 / 100) * weights.serviceVersions;
+    }
+
+    // Score for NSE scripts on ports
+    const portScripts = getScripts(port);
+    if(portScripts.length > 0) {
+        portScripts.forEach(script => {
+            const isVulnScript = NSE_VULN_SCRIPTS.some(vuln => 
+                script.id.includes(vuln.replace('*', ''))
+            );
+            if (isVulnScript) {
+                score += (25 / 100) * weights.vulnScripts;
+            }
+        });
+    }
+    
+    return Math.min(100, score);
+}
+
 export function calculateRiskScore(host: Host, weights: RiskWeights): { score: number; factors: string[] } {
   let score = 0;
   const factors: string[] = [];
@@ -81,32 +111,25 @@ export function calculateRiskScore(host: Host, weights: RiskWeights): { score: n
 
   openPorts.forEach((port) => {
     const portId = parseInt(port.portid, 10);
-    
-    // Score for critical ports
+    const portScore = calculatePortRiskScore(port, weights);
+    score += portScore;
+
+    // Add factors based on what contributed to the port's score
     if (CRITICAL_PORTS[portId]) {
-      score += (CRITICAL_PORTS[portId] / 25) * weights.criticalPorts;
       factors.push(`Critical port ${portId} (${port.service?.name || 'unknown'}) is open`);
     }
-
-    // Score for service version info
     if (port.service?.product) {
-      score += (5 / 100) * weights.serviceVersions;
       factors.push(`Detailed service version exposed on port ${portId} (${port.service.product})`);
     }
-
-    // Score for NSE scripts on ports
     const portScripts = getScripts(port);
-    if(portScripts.length > 0) {
-        portScripts.forEach(script => {
-            const isVulnScript = NSE_VULN_SCRIPTS.some(vuln => 
-                script.id.includes(vuln.replace('*', ''))
-            );
-            if (isVulnScript) {
-                score += (25 / 100) * weights.vulnScripts;
-                factors.push(`Potential vulnerability found by NSE script '${script.id}' on port ${portId}`);
-            }
-        });
-    }
+    portScripts.forEach(script => {
+        const isVulnScript = NSE_VULN_SCRIPTS.some(vuln => 
+            script.id.includes(vuln.replace('*', ''))
+        );
+        if (isVulnScript) {
+            factors.push(`Potential vulnerability found by NSE script '${script.id}' on port ${portId}`);
+        }
+    });
   });
 
   // Check host-level scripts
