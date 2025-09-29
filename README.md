@@ -2,7 +2,7 @@
 
 Visual Map es una plataforma web Next.js que te permite subir escaneos XML de Nmap y visualizar hosts, puertos abiertos y servicios de una manera gráfica y amigable. Esta aplicación incluye un módulo de inteligencia artificial con la API de Gemini para priorizar los hosts más vulnerables, facilitando la identificación y solución de riesgos de seguridad en grandes escaneos de red.
 
-<img width="3799" height="1728" alt="image" src="https://github.com/user-attachments/assets/2427f6a4-6eaa-43b7-a7d2-969242273908" />
+<img width="3799" height="1724" alt="image" src="https://github.com/user-attachments/assets/cfe8f3c9-42eb-4fdb-8321-15068aae8443" />
 
 ## Características
 
@@ -54,7 +54,7 @@ Abre [http://localhost:9002](http://localhost:9002) en tu navegador para ver el 
 ### Dashboard Principal
 **Visualiza el Dashboard:** Una vez que el archivo se procesa, aparecerá el dashboard mostrando un resumen del escaneo.
 
-<img width="3799" height="1728" alt="image" src="https://github.com/user-attachments/assets/045ed26c-6fbe-4b22-8887-3f9183dac2c9" />
+<img width="3799" height="1724" alt="image" src="https://github.com/user-attachments/assets/d96b135b-549f-4626-a35f-136e7eacd0b3" />
 
 ### Hosts más vulnerables
 **Analiza las Vulnerabilidades Principales:** El panel "Hosts Más Vulnerables" muestra los hosts con las puntuaciones de riesgo más altas. Haz clic en un host para ver una explicación generada por IA de sus vulnerabilidades.
