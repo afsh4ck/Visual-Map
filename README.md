@@ -36,6 +36,9 @@ Esta herramienta utiliza un módulo de inteligencia artificial a través de la A
 # Añade tu clave API en .env
 nano .env
 GEMINI_API_KEY={your-gemini-api-key}
+
+# Cambialo por tu clave API
+GEMINI_API_KEY=VUXYEBICNEUNC67865....
 ```
 
 ## Generación del XML con Nmap
