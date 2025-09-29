@@ -129,7 +129,7 @@ export default function HostDetailDrawer() {
               <Tabs defaultValue="ports" className="w-full">
                 <TabsList className="grid w-full grid-cols-2">
                   <TabsTrigger value="ports">{t('openPorts')} ({openPorts.length})</TabsTrigger>
-                  <TabsTrigger value="host-scripts">Scripts NSE ({hostScripts.length})</TabsTrigger>
+                  <TabsTrigger value="host-scripts">{t('nseScripts')} ({hostScripts.length})</TabsTrigger>
                 </TabsList>
                 <TabsContent value="ports">
                   <ScrollArea className="h-[calc(100vh-12rem)]">
@@ -169,7 +169,7 @@ export default function HostDetailDrawer() {
                                 <div key={script.id}>
                                     <h4 className="font-semibold">{script.id}</h4>
                                     <pre className="mt-2 rounded-md bg-muted p-4 text-xs font-code overflow-x-auto">
-                                        <code>{script.output}</code>
+                                        <code>{script.output.replace(/&#xa;/g, '\n')}</code>
                                     </pre>
                                 </div>
                             ))}
@@ -187,3 +187,5 @@ export default function HostDetailDrawer() {
     </Sheet>
   );
 }
+
+    
