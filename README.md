@@ -21,6 +21,9 @@ Visual Map es una plataforma web Next.js que te permite subir escaneos XML de Nm
 git clone https://github.com/afsh4ck/Visual-Map.git
 cd Visual-Map
 
+# Instalar NodeJS y npm (Kali Linux)
+sudo apt install -y nodejs npm
+
 # Instalar dependencias
 npm install
 
