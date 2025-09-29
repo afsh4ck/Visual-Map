@@ -68,7 +68,7 @@ export default function VulnerabilitiesDetailView({ hosts, pdfMode = false }: { 
     const [sortConfig, setSortConfig] = useState<{ key: SortableKeys; direction: SortDirection } | null>({ key: 'riskScore', direction: 'descending' });
 
     const vulnerableHosts = useMemo(() => 
-        hosts.filter(h => (h.riskScore ?? 0) >= 40)
+        hosts.filter(h => (h.riskScore ?? 0) >= 70)
     , [hosts]);
 
     const sortedVulnerableHosts = useMemo(() => {
