@@ -46,7 +46,7 @@ export default function PortsDetailView({ hosts, pdfMode = false }: { hosts: Hos
       if (host.ports && host.ports.port) {
         const hostPorts = Array.isArray(host.ports.port) ? host.ports.port : [host.ports.port];
         hostPorts.filter(p => p.state.state === 'open').forEach(p => {
-          ports.push({ ...p, hostAddress: host.address.addr });
+          ports.push({ ...p, hostAddress: host.address[0].addr });
         });
       }
     });

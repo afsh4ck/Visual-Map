@@ -122,7 +122,7 @@ export default function HostDetailDrawer() {
         {selectedHost && (
           <>
             <SheetHeader>
-              <SheetTitle className="font-mono">{selectedHost.address.addr}</SheetTitle>
+              <SheetTitle className="font-mono">{selectedHost.address[0].addr}</SheetTitle>
               <SheetDescription>{getHostname(selectedHost)}</SheetDescription>
             </SheetHeader>
             <div className="py-4">

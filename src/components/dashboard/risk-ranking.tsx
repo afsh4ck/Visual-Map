@@ -50,7 +50,7 @@ export default function RiskRanking() {
     // Check if the click target is the trigger itself, not the link inside
     if (e.target === e.currentTarget) {
         e.preventDefault();
-        router.push(`/details/host/${host.address.addr}`);
+        router.push(`/details/host/${host.address[0].addr}`);
     }
   };
 
@@ -62,10 +62,10 @@ export default function RiskRanking() {
       <CardContent>
         <Accordion type="single" collapsible className="w-full">
           {topVulnerableHosts.map((host: Host) => (
-            <AccordionItem value={host.address.addr} key={host.address.addr}>
+            <AccordionItem value={host.address[0].addr} key={host.address[0].addr}>
               <AccordionTrigger onClick={(e) => handleTriggerClick(e, host)} className="hover:no-underline">
                 <div className="flex items-center justify-between w-full pr-4">
-                  <span className="truncate font-mono text-sm hover:underline">{host.address.addr}</span>
+                  <span className="truncate font-mono text-sm hover:underline">{host.address[0].addr}</span>
                   <Badge variant="default" className={cn('border-transparent', getRiskColorClass(host.riskScore ?? 0))}>
                     {host.riskScore?.toFixed(0)}
                   </Badge>

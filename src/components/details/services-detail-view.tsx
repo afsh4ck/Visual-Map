@@ -63,7 +63,7 @@ export default function ServicesDetailView({ hosts, pdfMode = false }: { hosts: 
             name: p.service!.name,
             product: p.service!.product || '',
             version: p.service!.version || '',
-            hostAddress: host.address.addr,
+            hostAddress: host.address[0].addr,
             port: p
           });
         });

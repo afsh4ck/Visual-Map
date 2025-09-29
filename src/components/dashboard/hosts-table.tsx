@@ -89,8 +89,8 @@ export default function HostsTable() {
 
         switch (sortConfig.key) {
           case 'ipAddress':
-            aValue = ipToNumber(a.address.addr);
-            bValue = ipToNumber(b.address.addr);
+            aValue = ipToNumber(a.address[0].addr);
+            bValue = ipToNumber(b.address[0].addr);
             break;
           case 'hostname':
             aValue = getHostname(a);
@@ -163,7 +163,7 @@ export default function HostsTable() {
   };
 
   const handleRowClick = (host: Host) => {
-    router.push(`/details/host/${host.address.addr}`);
+    router.push(`/details/host/${host.address[0].addr}`);
   };
 
   return (
@@ -196,11 +196,11 @@ export default function HostsTable() {
             <TableBody>
               {currentHosts.map((host: Host, index: number) => (
                 <TableRow
-                  key={`${host.address.addr}-${index}`}
+                  key={`${host.address[0].addr}-${index}`}
                   onClick={() => handleRowClick(host)}
                   className="cursor-pointer"
                 >
-                  <TableCell className="font-mono font-medium">{host.address.addr}</TableCell>
+                  <TableCell className="font-mono font-medium">{host.address[0].addr}</TableCell>
                   <TableCell className="truncate max-w-[200px]">{getHostname(host)}</TableCell>
                   <TableCell className="truncate max-w-[200px]">{getOsName(host)}</TableCell>
                   <TableCell className="text-center">{getOpenPortsCount(host)}</TableCell>

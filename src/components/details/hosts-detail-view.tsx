@@ -79,8 +79,8 @@ export default function HostsDetailView({ hosts }: { hosts: Host[] }) {
 
         switch (sortConfig.key) {
           case 'ipAddress':
-            aValue = ipToNumber(a.address.addr);
-            bValue = ipToNumber(b.address.addr);
+            aValue = ipToNumber(a.address[0].addr);
+            bValue = ipToNumber(b.address[0].addr);
             break;
           case 'hostname':
             aValue = getHostname(a);
@@ -130,7 +130,7 @@ export default function HostsDetailView({ hosts }: { hosts: Host[] }) {
   };
 
   const handleRowClick = (host: Host) => {
-    router.push(`/details/host/${host.address.addr}`);
+    router.push(`/details/host/${host.address[0].addr}`);
   };
 
   return (
@@ -162,8 +162,8 @@ export default function HostsDetailView({ hosts }: { hosts: Host[] }) {
                     </TableHeader>
                     <TableBody>
                         {sortedHosts.map((host) => (
-                        <TableRow key={host.address.addr} onClick={() => handleRowClick(host)} className="cursor-pointer">
-                            <TableCell className="font-mono">{host.address.addr}</TableCell>
+                        <TableRow key={host.address[0].addr} onClick={() => handleRowClick(host)} className="cursor-pointer">
+                            <TableCell className="font-mono">{host.address[0].addr}</TableCell>
                             <TableCell>{getHostname(host)}</TableCell>
                             <TableCell>{getOsName(host)}</TableCell>
                             <TableCell className="text-center">{getOpenPortsCount(host)}</TableCell>
