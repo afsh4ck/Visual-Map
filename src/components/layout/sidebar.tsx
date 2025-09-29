@@ -114,6 +114,8 @@ export default function AppSidebar() {
             return 'badge-yellow';
         };
 
+        const vulnerabilitiesTitle = locale === 'es' ? 'Vulnerabilidades' : 'Vulnerabilities';
+
         const htmlContent = `
             <!DOCTYPE html>
             <html lang="${locale}">
@@ -165,7 +167,7 @@ export default function AppSidebar() {
                         <ul>
                             <li><a href="#summary">${tSummary('totalHosts')}</a></li>
                             <li><a href="#vulnerable-hosts">${tRiskRanking('title')}</a></li>
-                            <li><a href="#visualizations">${tDetails('vulnerabilities')}</a></li>
+                            <li><a href="#visualizations">${vulnerabilitiesTitle}</a></li>
                             <li><a href="#all-hosts">${tHostsTable('title')}</a></li>
                         </ul>
                     </nav>
@@ -201,7 +203,7 @@ export default function AppSidebar() {
                     ` : ''}
                     
                     <section id="visualizations">
-                        <h2>${tDetails('vulnerabilities')}</h2>
+                        <h2>${vulnerabilitiesTitle}</h2>
                         <div class="chart-container"><h3>${tDetails('hostRiskDistributionTitle')}</h3>${riskChart ? `<img src="${riskChart}">` : 'Chart not available'}</div>
                         <div class="chart-container"><h3>${tDetails('topPortsTitle')}</h3>${portsChart ? `<img src="${portsChart}">` : 'Chart not available'}</div>
                         <div class="chart-container"><h3>${tDetails('serviceDistributionTitle')}</h3>${servicesChart ? `<img src="${servicesChart}">` : 'Chart not available'}</div>
@@ -462,7 +464,8 @@ export default function AppSidebar() {
       }
       doc.setFontSize(20);
       doc.setFont('Helvetica', 'bold');
-      doc.text(tDetails('vulnerabilities'), margin, yPos);
+      const vulnerabilitiesTitle = locale === 'es' ? 'Vulnerabilidades' : 'Vulnerabilities';
+      doc.text(vulnerabilitiesTitle, margin, yPos);
       yPos += 20;
 
       await addChart('pdf-risk-distribution-chart', tDetails('hostRiskDistributionTitle'));
@@ -613,3 +616,8 @@ export default function AppSidebar() {
     </>
   );
 }
+
+    
+    
+
+    
