@@ -1,3 +1,4 @@
+
 'use server';
 
 import { XMLParser } from 'fast-xml-parser';
@@ -18,6 +19,7 @@ const options = {
       'nmaprun.host.hostnames.hostname',
       'nmaprun.host.ports.port.script',
       'nmaprun.host.hostscript.script',
+      'nmaprun.host.os.osmatch',
     ];
     return arrayPaths.indexOf(jpath) !== -1;
   },

@@ -1,3 +1,4 @@
+
 export interface NmapRun {
   host: Host[];
 }
@@ -52,6 +53,16 @@ export interface Hostscript {
   script: Script | Script[];
 }
 
+export interface OsMatch {
+  name: string;
+  accuracy: string;
+  line: string;
+}
+
+export interface Os {
+  osmatch: OsMatch | OsMatch[];
+}
+
 export interface Host {
   starttime: string;
   endtime: string;
@@ -60,6 +71,7 @@ export interface Host {
   ports: Ports;
   status: Status;
   hostscript?: Hostscript;
+  os?: Os;
   riskScore?: number;
   riskFactors?: string[];
 }

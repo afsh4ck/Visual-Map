@@ -9,6 +9,15 @@ import { Badge } from '@/components/ui/badge';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/navigation';
 import { ArrowUpDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+const getRiskColorClass = (score: number): string => {
+    if (score >= 90) return 'bg-red-600 hover:bg-red-700 text-white';
+    if (score >= 75) return 'bg-orange-500 hover:bg-orange-600 text-white';
+    if (score >= 40) return 'bg-yellow-500 hover:bg-yellow-600 text-black';
+    if (score > 0) return 'bg-green-500 hover:bg-green-600 text-white';
+    return 'bg-gray-400 hover:bg-gray-500 text-white';
+};
 
 const getHostname = (host: Host | null): string => {
   if (!host || !host.hostnames || (Array.isArray(host.hostnames) && host.hostnames.length === 0)) {
@@ -30,16 +39,22 @@ const getHostname = (host: Host | null): string => {
   return 'N/A';
 };
 
+const getOsName = (host: Host | null): string => {
+    if (!host || !host.os || !host.os.osmatch) {
+        return 'N/A';
+    }
+    const osMatches = Array.isArray(host.os.osmatch) ? host.os.osmatch : [host.os.osmatch];
+    if (osMatches.length > 0) {
+        const bestMatch = osMatches.reduce((prev, current) => (parseInt(prev.accuracy) > parseInt(current.accuracy)) ? prev : current);
+        return bestMatch.name;
+    }
+    return 'N/A';
+};
+
 const getOpenPortsCount = (host: Host) => {
   if (!host.ports || !host.ports.port) return 0;
   const ports = Array.isArray(host.ports.port) ? host.ports.port : [host.ports.port];
   return ports.filter(p => p.state.state === 'open').length;
-};
-
-const getRiskBadgeVariant = (score: number): 'destructive' | 'secondary' | 'default' | 'outline' => {
-  if (score >= 75) return 'destructive';
-  if (score >= 40) return 'secondary';
-  return 'outline';
 };
 
 type SortableKeys = 'ipAddress' | 'hostname' | 'os' | 'openPorts' | 'riskScore';
@@ -72,8 +87,8 @@ export default function HostsDetailView({ hosts }: { hosts: Host[] }) {
             bValue = getHostname(b);
             break;
           case 'os':
-             aValue = 'N/A'; // Placeholder for now
-             bValue = 'N/A';
+             aValue = getOsName(a);
+             bValue = getOsName(b);
             break;
           case 'openPorts':
             aValue = getOpenPortsCount(a);
@@ -150,10 +165,12 @@ export default function HostsDetailView({ hosts }: { hosts: Host[] }) {
                         <TableRow key={host.address.addr} onClick={() => handleRowClick(host)} className="cursor-pointer">
                             <TableCell className="font-mono">{host.address.addr}</TableCell>
                             <TableCell>{getHostname(host)}</TableCell>
-                            <TableCell>N/A</TableCell>
+                            <TableCell>{getOsName(host)}</TableCell>
                             <TableCell className="text-center">{getOpenPortsCount(host)}</TableCell>
                             <TableCell className="text-right">
-                            <Badge variant={getRiskBadgeVariant(host.riskScore ?? 0)}>{host.riskScore?.toFixed(0)}</Badge>
+                                <Badge variant="default" className={cn('border-transparent', getRiskColorClass(host.riskScore ?? 0))}>
+                                    {host.riskScore?.toFixed(0)}
+                                </Badge>
                             </TableCell>
                         </TableRow>
                         ))}

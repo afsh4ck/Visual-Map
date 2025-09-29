@@ -5,7 +5,7 @@ import React, { useState, useMemo } from 'react';
 import { useScanStore } from '@/store/use-scan-store';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import type { Host } from '@/types/nmap';
+import type { Host, OsMatch } from '@/types/nmap';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ChevronLeft, ChevronRight, ArrowUpDown } from 'lucide-react';
@@ -33,6 +33,19 @@ const getHostname = (host: Host | null): string => {
   return 'N/A';
 };
 
+const getOsName = (host: Host | null): string => {
+    if (!host || !host.os || !host.os.osmatch) {
+        return 'N/A';
+    }
+    const osMatches = Array.isArray(host.os.osmatch) ? host.os.osmatch : [host.os.osmatch];
+    if (osMatches.length > 0) {
+        // Find the one with the highest accuracy
+        const bestMatch = osMatches.reduce((prev, current) => (parseInt(prev.accuracy) > parseInt(current.accuracy)) ? prev : current);
+        return bestMatch.name;
+    }
+    return 'N/A';
+};
+
 
 const getOpenPortsCount = (host: Host) => {
   if (!host.ports || !host.ports.port) return 0;
@@ -48,7 +61,7 @@ const getRiskColorClass = (score: number): string => {
     return 'bg-gray-400 hover:bg-gray-500 text-white';
 };
 
-type SortableKeys = 'ipAddress' | 'hostname' | 'openPorts' | 'riskScore';
+type SortableKeys = 'ipAddress' | 'hostname' | 'os' | 'openPorts' | 'riskScore';
 type SortDirection = 'ascending' | 'descending';
 
 const ROWS_PER_PAGE = 10;
@@ -63,6 +76,7 @@ export default function HostsTable() {
   const [sortConfig, setSortConfig] = useState<{ key: SortableKeys; direction: SortDirection } | null>({key: 'riskScore', direction: 'descending'});
   const t = useTranslations('HostsTable');
   const tPagination = useTranslations('Pagination');
+  const tDetails = useTranslations('DetailsPage');
   const router = useRouter();
 
   const sortedHosts = useMemo(() => {
@@ -81,6 +95,10 @@ export default function HostsTable() {
           case 'hostname':
             aValue = getHostname(a);
             bValue = getHostname(b);
+            break;
+          case 'os':
+            aValue = getOsName(a);
+            bValue = getOsName(b);
             break;
           case 'openPorts':
             aValue = getOpenPortsCount(a);
@@ -164,6 +182,9 @@ export default function HostsTable() {
                 <TableHead onClick={() => requestSort('hostname')} className="cursor-pointer">
                   <div className="flex items-center">{t('hostname')} {getSortIcon('hostname')}</div>
                 </TableHead>
+                <TableHead onClick={() => requestSort('os')} className="cursor-pointer">
+                  <div className="flex items-center">{tDetails('os')} {getSortIcon('os')}</div>
+                </TableHead>
                 <TableHead onClick={() => requestSort('openPorts')} className="text-center cursor-pointer">
                   <div className="flex items-center justify-center">{t('openPorts')} {getSortIcon('openPorts')}</div>
                 </TableHead>
@@ -181,6 +202,7 @@ export default function HostsTable() {
                 >
                   <TableCell className="font-mono font-medium">{host.address.addr}</TableCell>
                   <TableCell className="truncate max-w-[200px]">{getHostname(host)}</TableCell>
+                  <TableCell className="truncate max-w-[200px]">{getOsName(host)}</TableCell>
                   <TableCell className="text-center">{getOpenPortsCount(host)}</TableCell>
                   <TableCell className="text-right">
                     <Badge variant="default" className={cn('border-transparent', getRiskColorClass(host.riskScore ?? 0))}>
