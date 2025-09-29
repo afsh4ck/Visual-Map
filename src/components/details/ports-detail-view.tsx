@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useMemo } from 'react';
@@ -6,14 +7,26 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { ArrowUpDown } from 'lucide-react';
+import { useScanStore } from '@/store/use-scan-store';
+import { calculatePortRiskScore } from '@/lib/risk-scorer';
+import { cn } from '@/lib/utils';
+import { useRouter } from '@/navigation';
 
 interface PortData extends Port {
     hostAddress: string;
 }
 
-type SortableKeys = 'hostIp' | 'port' | 'protocol' | 'service' | 'product' | 'version';
+const getRiskColorClass = (score: number): string => {
+    if (score >= 90) return 'bg-red-600 hover:bg-red-700 text-white';
+    if (score >= 75) return 'bg-orange-500 hover:bg-orange-600 text-white';
+    if (score >= 40) return 'bg-yellow-500 hover:bg-yellow-600 text-black';
+    if (score > 0) return 'bg-green-500 hover:bg-green-600 text-white';
+    return 'bg-gray-400 hover:bg-gray-500 text-white';
+};
+
+type SortableKeys = 'hostIp' | 'port' | 'protocol' | 'service' | 'product' | 'version' | 'riskScore';
 type SortDirection = 'ascending' | 'descending';
 
 const ipToNumber = (ip: string) => {
@@ -22,7 +35,10 @@ const ipToNumber = (ip: string) => {
 
 export default function PortsDetailView({ hosts, pdfMode = false }: { hosts: Host[], pdfMode?: boolean }) {
   const t = useTranslations('DetailsPage');
-  const [sortConfig, setSortConfig] = useState<{ key: SortableKeys; direction: SortDirection } | null>(null);
+  const locale = useLocale();
+  const { riskWeights } = useScanStore();
+  const [sortConfig, setSortConfig] = useState<{ key: SortableKeys; direction: SortDirection } | null>({ key: 'riskScore', direction: 'descending' });
+  const router = useRouter();
 
   const allPorts = React.useMemo(() => {
     const ports: PortData[] = [];
@@ -41,7 +57,8 @@ export default function PortsDetailView({ hosts, pdfMode = false }: { hosts: Hos
     let sortableItems = [...allPorts];
     if (sortConfig !== null) {
         sortableItems.sort((a, b) => {
-            let aValue, bValue;
+            let aValue: string | number;
+            let bValue: string | number;
 
             switch (sortConfig.key) {
                 case 'hostIp':
@@ -68,6 +85,10 @@ export default function PortsDetailView({ hosts, pdfMode = false }: { hosts: Hos
                     aValue = a.service?.version || '';
                     bValue = b.service?.version || '';
                     break;
+                case 'riskScore':
+                    aValue = calculatePortRiskScore(a, riskWeights);
+                    bValue = calculatePortRiskScore(b, riskWeights);
+                    break;
                 default:
                     return 0;
             }
@@ -82,7 +103,7 @@ export default function PortsDetailView({ hosts, pdfMode = false }: { hosts: Hos
         });
     }
     return sortableItems;
-  }, [allPorts, sortConfig]);
+  }, [allPorts, sortConfig, riskWeights]);
 
   const requestSort = (key: SortableKeys) => {
     let direction: SortDirection = 'ascending';
@@ -107,6 +128,12 @@ export default function PortsDetailView({ hosts, pdfMode = false }: { hosts: Hos
     });
     return Object.entries(counts).map(([port, count]) => ({ port, count })).sort((a,b) => b.count - a.count).slice(0, 15);
   }, [allPorts]);
+
+  const riskScoreTitle = locale === 'es' ? 'Puntaje de Riesgo' : 'Risk Score';
+
+  const handleRowClick = (hostIp: string) => {
+    router.push(`/details/host/${hostIp}`);
+  };
 
   return (
     <div className="space-y-8">
@@ -155,21 +182,32 @@ export default function PortsDetailView({ hosts, pdfMode = false }: { hosts: Hos
                 <TableHead onClick={() => requestSort('version')} className="cursor-pointer">
                     <div className="flex items-center">{t('version')} {getSortIcon('version')}</div>
                 </TableHead>
+                 <TableHead onClick={() => requestSort('riskScore')} className="text-right cursor-pointer">
+                  <div className="flex items-center justify-end">{riskScoreTitle} {getSortIcon('riskScore')}</div>
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {sortedPorts.map((port, index) => (
-                <TableRow key={`${port.hostAddress}-${port.portid}-${index}`}>
-                  <TableCell className="font-mono">{port.hostAddress}</TableCell>
-                  <TableCell>
-                    <Badge variant="secondary">{port.portid}</Badge>
-                  </TableCell>
-                  <TableCell>{port.protocol}</TableCell>
-                  <TableCell>{port.service?.name}</TableCell>
-                  <TableCell>{port.service?.product}</TableCell>
-                  <TableCell>{port.service?.version}</TableCell>
-                </TableRow>
-              ))}
+              {sortedPorts.map((port, index) => {
+                const portRisk = calculatePortRiskScore(port, riskWeights);
+                return (
+                  <TableRow key={`${port.hostAddress}-${port.portid}-${index}`} onClick={() => handleRowClick(port.hostAddress)} className="cursor-pointer">
+                    <TableCell className="font-mono">{port.hostAddress}</TableCell>
+                    <TableCell>
+                      <Badge variant="secondary">{port.portid}</Badge>
+                    </TableCell>
+                    <TableCell>{port.protocol}</TableCell>
+                    <TableCell>{port.service?.name}</TableCell>
+                    <TableCell>{port.service?.product}</TableCell>
+                    <TableCell>{port.service?.version}</TableCell>
+                    <TableCell className="text-right">
+                        <Badge variant="default" className={cn('border-transparent', getRiskColorClass(portRisk))}>
+                            {portRisk.toFixed(0)}
+                        </Badge>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </CardContent>
