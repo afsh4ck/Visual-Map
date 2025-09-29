@@ -21,15 +21,21 @@ Visual Map es una plataforma web Next.js que te permite subir escaneos XML de Nm
 git clone https://github.com/afsh4ck/Visual-Map.git
 cd Visual-Map
 
-# Configura tu API de Gemini
-nano .env
-GEMINI_API_KEY={your-gemini-api-key}
-
 # Instalar dependencias
 npm install
 
 # Ejecuta el servidor de desarrollo
 npm run dev
+```
+
+## Configuración de la API de Gemini
+Esta herramienta utiliza un módulo de inteligencia artificial a través de la API de Gemini que permite hacer una descripción avanzada de cada host encontrado, buscando vulnerabilidades y dándonos los pasos de explotación de la máquina. Puedes configurar tu API de Gemini aqui: https://aistudio.google.com/
+
+
+```bash
+# Añade tu clave API en .env
+nano .env
+GEMINI_API_KEY={your-gemini-api-key}
 ```
 
 ## Generación del XML con Nmap
