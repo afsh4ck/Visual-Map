@@ -96,7 +96,7 @@ export default function HostDetailPage({ params }: { params: { ip: string } }) {
     setSelectedHost(null);
   }, [scanResult, router, setSelectedHost]);
   
-  const host = useMemo(() => scanResult?.hosts.find(h => h.address.addr === ip), [scanResult, ip]);
+  const host = useMemo(() => scanResult?.hosts.find(h => h.address[0].addr === ip), [scanResult, ip]);
 
   const openPorts = useMemo(() => getPorts(host), [host]);
 
@@ -189,10 +189,10 @@ export default function HostDetailPage({ params }: { params: { ip: string } }) {
                     {hasHostname ? (
                         <h1 className="text-3xl font-bold flex items-baseline gap-2">
                             {hostname} 
-                            <span className="text-2xl text-muted-foreground font-mono">({host.address.addr})</span>
+                            <span className="text-2xl text-muted-foreground font-mono">({host.address[0].addr})</span>
                         </h1>
                     ) : (
-                        <h1 className="text-3xl font-bold font-mono">{host.address.addr}</h1>
+                        <h1 className="text-3xl font-bold font-mono">{host.address[0].addr}</h1>
                     )}
                 </div>
             </div>
@@ -302,5 +302,3 @@ export default function HostDetailPage({ params }: { params: { ip: string } }) {
     </div>
   );
 }
-
-    
