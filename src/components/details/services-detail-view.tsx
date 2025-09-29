@@ -159,13 +159,13 @@ export default function ServicesDetailView({ hosts, pdfMode = false }: { hosts: 
           <div id={pdfMode ? "pdf-service-distribution-chart" : "service-distribution-chart"}>
             <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
-                    <Pie data={serviceDistribution.slice(0, 10)} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} label>
+                    <Pie data={serviceDistribution.slice(0, 10)} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>
                         {serviceDistribution.slice(0, 10).map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                         ))}
                     </Pie>
                     <Tooltip />
-                    <Legend />
+                    <Legend layout="vertical" align="right" verticalAlign="middle" />
                 </PieChart>
             </ResponsiveContainer>
           </div>
