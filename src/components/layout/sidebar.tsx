@@ -43,6 +43,18 @@ const getHostname = (host: Host | null): string => {
   return 'N/A';
 };
 
+const getOsName = (host: Host | null): string => {
+    if (!host || !host.os || !host.os.osmatch) {
+        return 'N/A';
+    }
+    const osMatches = Array.isArray(host.os.osmatch) ? host.os.osmatch : [host.os.osmatch];
+    if (osMatches.length > 0) {
+        const bestMatch = osMatches.reduce((prev, current) => (parseInt(prev.accuracy) > parseInt(current.accuracy)) ? prev : current);
+        return bestMatch.name;
+    }
+    return 'N/A';
+};
+
 
 const getOpenPortsCount = (host: Host) => {
   if (!host.ports || !host.ports.port) return 0;
@@ -116,8 +128,9 @@ export default function AppSidebar() {
         };
 
         const visualizationsTitle = locale === 'es' ? 'Visualizaciones' : 'Visualizations';
-        const osTitle = locale === 'es' ? 'SO' : 'OS';
-        const summaryTitle = locale === 'es' ? 'Resumen' : 'Summary';
+        const osTitle = tDetails('os');
+        const summaryTitle = tSummary('totalHosts').includes('Total') ? 'Summary' : 'Resumen';
+
 
         const htmlContent = `
             <!DOCTYPE html>
@@ -197,12 +210,13 @@ export default function AppSidebar() {
                         <h2>${tRiskRanking('title')}</h2>
                         <div class="table-responsive">
                             <table>
-                                <thead><tr><th>${tHostsTable('ipAddress')}</th><th>${tHostsTable('hostname')}</th><th>${tHostsTable('riskScore')}</th></tr></thead>
+                                <thead><tr><th>${tHostsTable('ipAddress')}</th><th>${tHostsTable('hostname')}</th><th>${osTitle}</th><th>${tHostsTable('riskScore')}</th></tr></thead>
                                 <tbody>
                                     ${topVulnerableHosts.map(h => `
                                         <tr>
                                             <td><a href="#host-${h.address.addr.replace(/\./g, '-')}">${h.address.addr}</a></td>
                                             <td>${getHostname(h)}</td>
+                                            <td>${getOsName(h)}</td>
                                             <td><span class="badge ${getRiskClass(h.riskScore ?? 0)}">${h.riskScore?.toFixed(0) ?? '0'}</span></td>
                                         </tr>
                                     `).join('')}
@@ -229,7 +243,7 @@ export default function AppSidebar() {
                                     <tr>
                                         <td><a href="#host-${h.address.addr.replace(/\./g, '-')}">${h.address.addr}</a></td>
                                         <td>${getHostname(h)}</td>
-                                        <td>N/A</td>
+                                        <td>${getOsName(h)}</td>
                                         <td>${getOpenPortsCount(h)}</td>
                                         <td><span class="badge ${getRiskClass(h.riskScore ?? 0)}">${h.riskScore?.toFixed(0) ?? '0'}</span></td>
                                     </tr>
@@ -330,7 +344,7 @@ export default function AppSidebar() {
               const x = cell.x + (cell.width - badgeWidth) / 2;
               const y = cell.y + (cell.height - badgeHeight) / 2;
               doc.roundedRect(x, y, badgeWidth, badgeHeight, 6, 6, 'F');
-              doc.setTextColor(score < 40 && score > 0 ? '#000000' : '#ffffff');
+              doc.setTextColor(score >= 40 ? '#ffffff' : '#000000');
               doc.setFontSize(9);
               doc.text(scoreText, cell.x + cell.width / 2, cell.y + cell.height / 2, {
                   align: 'center',
@@ -392,18 +406,19 @@ export default function AppSidebar() {
         yPos += 25;
         doc.autoTable({
             startY: yPos,
-            head: [[tHostsTable('ipAddress'), tHostsTable('hostname'), tHostsTable('riskScore')]],
+            head: [[tHostsTable('ipAddress'), tHostsTable('hostname'), tDetails('os'), tHostsTable('riskScore')]],
             body: topVulnerableHosts.map(h => [
                 h.address.addr,
                 getHostname(h),
+                getOsName(h),
                 h.riskScore?.toFixed(0) ?? '0'
             ]),
             theme: 'striped',
             headStyles: { fillColor: primaryColor, textColor: '#ffffff' },
             styles: { font: 'Helvetica', cellPadding: 8, halign: 'center' },
-            columnStyles: { 0: { halign: 'left' }, 1: { halign: 'left' } },
+            columnStyles: { 0: { halign: 'left' }, 1: { halign: 'left' }, 2: { halign: 'left' } },
             didDrawCell: (data) => {
-              if (data.column.index === 2 && data.section === 'body') {
+              if (data.column.index === 3 && data.section === 'body') {
                 drawCell(data);
               }
             }
@@ -457,7 +472,7 @@ export default function AppSidebar() {
         body: allHostsSortedByIp.map(h => [
           h.address.addr,
           getHostname(h),
-          'N/A',
+          getOsName(h),
           getOpenPortsCount(h),
           h.riskScore?.toFixed(0) ?? '0'
         ]),
@@ -472,7 +487,7 @@ export default function AppSidebar() {
         },
         pageBreak: 'auto'
       });
-      yPos = doc.lastAutoTable.finalY + 30; // Add spacing after the table
+      yPos = doc.lastAutoTable.finalY + 30;
   
       // -- Detailed Host Info --
       if(yPos > pageHeight - 80) { doc.addPage(); yPos = margin; }
