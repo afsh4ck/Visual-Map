@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarHeader, SidebarSeparator } from '@/components/ui/sidebar';
@@ -14,6 +15,7 @@ import 'jspdf-autotable';
 import html2canvas from 'html2canvas';
 import type { Host } from '@/types/nmap';
 import { Slider } from '../ui/slider';
+import { VmLogo } from '../icons';
 
 // Extend jsPDF with autoTable
 interface jsPDFWithAutoTable extends jsPDF {
@@ -101,9 +103,8 @@ export default function AppSidebar() {
         const servicesChart = await getChartAsBase64('pdf-service-distribution-chart');
 
         const topVulnerableHosts = [...hosts]
-            .filter(h => (h.riskScore ?? 0) > 0)
-            .sort((a, b) => (b.riskScore ?? 0) - (a.riskScore ?? 0))
-            .slice(0, 10);
+            .filter(h => (h.riskScore ?? 0) >= 60)
+            .sort((a, b) => (b.riskScore ?? 0) - (a.riskScore ?? 0));
         
         const allHostsSorted = [...hosts].sort((a,b) => ipToNumber(a.address.addr) - ipToNumber(b.address.addr));
         
@@ -119,7 +120,7 @@ export default function AppSidebar() {
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>${tHostsTable('title')} - ${fileName}</title>
+                <title>Visual Map Scan Report - ${fileName}</title>
                 <style>
                     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f8f9fa; margin: 0; padding: 0; }
                     .container { max-width: 1200px; margin: auto; background: #fff; padding: 20px; box-shadow: 0 0 15px rgba(0,0,0,0.05); border-radius: 8px; }
@@ -157,7 +158,7 @@ export default function AppSidebar() {
             </head>
             <body>
                 <div class="container">
-                    <h1>${tHostsTable('title')}</h1>
+                    <h1>Visual Map Scan Report</h1>
                     <p style="text-align: center;"><strong>File:</strong> ${fileName} | <strong>Date:</strong> ${new Date().toLocaleString(locale)}</p>
 
                     <nav>
@@ -299,12 +300,40 @@ export default function AppSidebar() {
       };
       
       // --- Cover Page ---
-      yPos = pageHeight / 2 - 50;
+      yPos = pageHeight / 2 - 80;
+      
+      // Render VmLogo to a canvas
+      const logoCanvas = document.createElement('canvas');
+      const logoCtx = logoCanvas.getContext('2d');
+      const logoSize = 40;
+      logoCanvas.width = logoSize;
+      logoCanvas.height = logoSize;
+
+      if(logoCtx) {
+          const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="${logoSize}" height="${logoSize}" viewBox="0 0 24 24" fill="none" stroke="hsl(259 66% 65%)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3" fill="hsl(259 66% 65%)"/></svg>`;
+          const svg = new Blob([svgString], {type: 'image/svg+xml;charset=utf-8'});
+          const url = URL.createObjectURL(svg);
+          const img = new Image();
+
+          await new Promise<void>((resolve) => {
+            img.onload = () => {
+                logoCtx.drawImage(img, 0, 0, logoSize, logoSize);
+                URL.revokeObjectURL(url);
+                const logoX = (pageWidth - logoSize) / 2;
+                doc.addImage(logoCanvas.toDataURL('image/png'), 'PNG', logoX, yPos, logoSize, logoSize);
+                resolve();
+            };
+            img.src = url;
+          });
+      }
+      
+      yPos += logoSize + 20;
+
       doc.setFont('Helvetica', 'bold');
-      doc.setFontSize(32);
-      doc.text(tSidebar('export'), pageWidth / 2, yPos, { align: 'center' });
+      doc.setFontSize(28);
+      doc.text("Visual Map Scan Report", pageWidth / 2, yPos, { align: 'center' });
       yPos += 30;
-      doc.setFontSize(16);
+      doc.setFontSize(14);
       doc.setFont('Helvetica', 'normal');
       doc.text(`${tDetails('hosts')}: ${scanResult.fileName}`, pageWidth / 2, yPos, { align: 'center' });
       yPos += 15;
@@ -584,6 +613,3 @@ export default function AppSidebar() {
     </>
   );
 }
-
-    
-    
