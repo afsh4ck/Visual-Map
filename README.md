@@ -1,8 +1,8 @@
 # Visual Map
 
-Visual Map es una plataforma web Next.js que te permite subir escaneos XML de Nmap y visualizar hosts, puertos abiertos y servicios de una manera gráfica y amigable. Esta aplicación incluye un módulo de inteligencia artificial para priorizar los hosts más vulnerables, facilitando la identificación y solución de riesgos de seguridad en grandes escaneos de red.
+Visual Map es una plataforma web Next.js que te permite subir escaneos XML de Nmap y visualizar hosts, puertos abiertos y servicios de una manera gráfica y amigable.
 
-
+Esta aplicación incluye un módulo de inteligencia artificial para priorizar los hosts más vulnerables, facilitando la identificación y solución de riesgos de seguridad en grandes escaneos de red.
 
 ## Características
 
@@ -19,15 +19,9 @@ Visual Map es una plataforma web Next.js que te permite subir escaneos XML de Nm
 ```bash
 # Clona el repositorio
 git clone https://github.com/afsh4ck/Visual-Map.git
-cd Visual-Map
 
 # Instalar dependencias
 npm install
-
-# Configurar tu API de Gemini 
-# Necesario para generar descripción de cada host y pasos de pentesting
-nano .env
-GEMINI_API_KEY={your-gemini-api-key}
 
 # Ejecuta el servidor de desarrollo
 npm run dev
@@ -41,9 +35,6 @@ sudo nmap -v -A 10.0.0.0/24 -oX scan.xml
 
 # Escaneo de host completo
 sudo nmap -v -A 10.0.0.1 -oX scan.xml
-
-Escaneo de subdominios
-sudo nmap -v -A -iL targets.txt -oX scan.xml
 ```
 
 Abre [http://localhost:9002](http://localhost:9002) en tu navegador para ver el resultado.
@@ -52,13 +43,10 @@ Abre [http://localhost:9002](http://localhost:9002) en tu navegador para ver el 
 
 ### Subida de escaneo XML
 **Sube un archivo XML de Nmap:** Arrastra y suelta tu archivo de resultados de escaneo de Nmap (en formato `.xml`) en la zona de carga, o haz clic para seleccionar un archivo.
-
-<img width="3838" height="1719" alt="image" src="https://github.com/user-attachments/assets/0be6834d-b004-4a24-a049-0a022b0269d5" />
-
+<img width="3834" height="1802" alt="image" src="https://github.com/user-attachments/assets/f4b3b5a2-1804-4d18-b2e7-cc5853f6ea3f" />
 
 ### Dashboard Principal
 **Visualiza el Dashboard:** Una vez que el archivo se procesa, aparecerá el dashboard mostrando un resumen del escaneo.
-
 <img width="3840" height="1926" alt="image" src="https://github.com/user-attachments/assets/daa47370-376e-42cc-96a3-32c700dede32" />
 
 ### Hosts más vulnerables
