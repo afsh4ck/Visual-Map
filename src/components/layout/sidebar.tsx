@@ -532,7 +532,9 @@ export default function AppSidebar() {
             <CardContent className="p-4 space-y-4">
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <Label htmlFor="critical-ports-weight">{tSidebar('criticalPorts')}</Label>
+                  <Label htmlFor="critical-ports-weight">
+                    {locale === 'es' ? 'Puertos Críticos' : 'Critical Ports'}
+                  </Label>
                   <span className="text-xs text-muted-foreground">{riskWeights.criticalPorts}/100</span>
                 </div>
                 <Slider defaultValue={[riskWeights.criticalPorts]} max={100} step={1} onValueCommit={(v) => handleWeightChange('criticalPorts', v)} id="critical-ports-weight"/>
@@ -583,4 +585,5 @@ export default function AppSidebar() {
   );
 }
 
+    
     
