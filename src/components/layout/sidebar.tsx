@@ -118,7 +118,7 @@ export default function AppSidebar() {
             .filter(h => (h.riskScore ?? 0) >= 60)
             .sort((a, b) => (b.riskScore ?? 0) - (a.riskScore ?? 0));
         
-        const allHostsSorted = [...hosts].sort((a,b) => ipToNumber(a.address.addr) - ipToNumber(b.address.addr));
+        const allHostsSorted = [...hosts].sort((a,b) => ipToNumber(a.address[0].addr) - ipToNumber(b.address[0].addr));
         
         const getRiskClass = (score: number) => {
             if (score >= 75) return 'badge-red';
@@ -192,7 +192,7 @@ export default function AppSidebar() {
                 </header>
 
                 <div class="container">
-                    <h1>Visual Map ${summaryTitle}</h1>
+                    <h1>Visual Map Report</h1>
                     <p style="color: hsl(var(--muted-foreground));"><strong>File:</strong> ${fileName} | <strong>Date:</strong> ${new Date().toLocaleString(locale)}</p>
 
                     <section id="summary">
@@ -214,7 +214,7 @@ export default function AppSidebar() {
                                 <tbody>
                                     ${topVulnerableHosts.map(h => `
                                         <tr>
-                                            <td><a href="#host-${h.address.addr.replace(/\./g, '-')}">${h.address.addr}</a></td>
+                                            <td><a href="#host-${h.address[0].addr.replace(/\./g, '-')}">${h.address[0].addr}</a></td>
                                             <td>${getHostname(h)}</td>
                                             <td>${getOsName(h)}</td>
                                             <td><span class="badge ${getRiskClass(h.riskScore ?? 0)}">${h.riskScore?.toFixed(0) ?? '0'}</span></td>
@@ -241,7 +241,7 @@ export default function AppSidebar() {
                             <tbody>
                                 ${allHostsSorted.map(h => `
                                     <tr>
-                                        <td><a href="#host-${h.address.addr.replace(/\./g, '-')}">${h.address.addr}</a></td>
+                                        <td><a href="#host-${h.address[0].addr.replace(/\./g, '-')}">${h.address[0].addr}</a></td>
                                         <td>${getHostname(h)}</td>
                                         <td>${getOsName(h)}</td>
                                         <td>${getOpenPortsCount(h)}</td>
@@ -256,11 +256,11 @@ export default function AppSidebar() {
                     <section id="host-details">
                       <h2>${tDetails('hosts')}</h2>
                       ${allHostsSorted.map(host => `
-                        <div id="host-${host.address.addr.replace(/\./g, '-')}" class="card" style="margin-top: 30px;">
+                        <div id="host-${host.address[0].addr.replace(/\./g, '-')}" class="card" style="margin-top: 30px;">
                           <div style="position: absolute; top: 20px; right: 20px;">
                               <span class="badge ${getRiskClass(host.riskScore ?? 0)}">${tHostsTable('riskScore')}: ${host.riskScore?.toFixed(0) ?? '0'}</span>
                           </div>
-                          <h3>Host: ${host.address.addr} (${getHostname(host)})</h3>
+                          <h3>Host: ${host.address[0].addr} (${getHostname(host)})</h3>
                           ${(Array.isArray(host.ports.port) ? host.ports.port : (host.ports.port ? [host.ports.port] : [])).filter(p => p?.state.state === 'open').length > 0 ? `
                             <div class="table-responsive">
                                 <table>
@@ -408,7 +408,7 @@ export default function AppSidebar() {
             startY: yPos,
             head: [[tHostsTable('ipAddress'), tHostsTable('hostname'), tDetails('os'), tHostsTable('riskScore')]],
             body: topVulnerableHosts.map(h => [
-                h.address.addr,
+                h.address[0].addr,
                 getHostname(h),
                 getOsName(h),
                 h.riskScore?.toFixed(0) ?? '0'
@@ -459,7 +459,7 @@ export default function AppSidebar() {
       await addChart('pdf-service-distribution-chart', tDetails('serviceDistributionTitle'));
 
       // -- All Hosts Table --
-      const allHostsSortedByIp = [...scanResult.hosts].sort((a, b) => ipToNumber(a.address.addr) - ipToNumber(b.address.addr));
+      const allHostsSortedByIp = [...scanResult.hosts].sort((a, b) => ipToNumber(a.address[0].addr) - ipToNumber(b.address[0].addr));
       doc.addPage();
       yPos = margin;
       doc.setFontSize(22);
@@ -470,7 +470,7 @@ export default function AppSidebar() {
         startY: yPos,
         head: [[tHostsTable('ipAddress'), tHostsTable('hostname'), tDetails('os'), tHostsTable('openPorts'), tHostsTable('riskScore')]],
         body: allHostsSortedByIp.map(h => [
-          h.address.addr,
+          h.address[0].addr,
           getHostname(h),
           getOsName(h),
           getOpenPortsCount(h),
@@ -501,7 +501,7 @@ export default function AppSidebar() {
         yPos += 20;
         doc.setFontSize(16);
         doc.setFont('Helvetica', 'bold');
-        doc.text(`Host: ${host.address.addr} (${getHostname(host)})`, margin, yPos);
+        doc.text(`Host: ${host.address[0].addr} (${getHostname(host)})`, margin, yPos);
         yPos += 15;
   
         const openPorts = (Array.isArray(host.ports.port) ? host.ports.port : (host.ports.port ? [host.ports.port] : []))
