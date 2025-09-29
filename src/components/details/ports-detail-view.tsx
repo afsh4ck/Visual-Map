@@ -146,7 +146,7 @@ export default function PortsDetailView({ hosts, pdfMode = false }: { hosts: Hos
               <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={portDistribution}>
                       <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="port" />
+                      <XAxis dataKey="port" interval={0} />
                       <YAxis allowDecimals={false} />
                       <Tooltip />
                       <Legend />
