@@ -12,20 +12,66 @@ import { useTranslations } from 'next-intl';
 import React, { useMemo, useState } from 'react';
 import { ArrowUpDown } from 'lucide-react';
 
+
+const getScripts = (item: Port | Host): Script[] => {
+    const scriptsSource = 'hostscript' in item ? item.hostscript : item.script;
+    if (!scriptsSource) return [];
+
+    const scripts: Script[] = [];
+    
+    const potentialScripts = Array.isArray(scriptsSource) ? scriptsSource : [scriptsSource];
+
+    potentialScripts.forEach(potential => {
+        if (potential) {
+            if ('script' in potential) { 
+                const nested = (potential as any).script;
+                if (Array.isArray(nested)) {
+                    scripts.push(...nested);
+                } else if (nested) {
+                    scripts.push(nested);
+                }
+            } else if ('id' in potential) { 
+                scripts.push(potential as Script);
+            }
+        }
+    });
+
+    return scripts;
+};
+
 const getHostname = (host: Host | null): string => {
-  if (!host || !host.hostnames || (Array.isArray(host.hostnames) && host.hostnames.length === 0)) {
+  if (!host) {
     return 'N/A';
   }
-  
-  const hostnamesArray = Array.isArray(host.hostnames) ? host.hostnames : [host.hostnames];
-  
-  for (const hostnamesEntry of hostnamesArray) {
-    if (hostnamesEntry && hostnamesEntry.hostname) {
-      const hostnameArray = Array.isArray(hostnamesEntry.hostname) ? hostnamesEntry.hostname : [hostnamesEntry.hostname];
-      const primaryHostname = hostnameArray.find(h => h.name);
+
+  // 1. Try to get from hostnames array
+  if (host.hostnames && Array.isArray(host.hostnames)) {
+    for (const hostnamesEntry of host.hostnames) {
+      if (hostnamesEntry && hostnamesEntry.hostname) {
+        const hostnameArray = Array.isArray(hostnamesEntry.hostname) ? hostnamesEntry.hostname : [hostnamesEntry.hostname];
+        const primaryHostname = hostnameArray.find(h => h.type === 'user' || h.type === 'PTR');
+        if (primaryHostname) {
+          return primaryHostname.name;
+        }
+      }
+    }
+  } else if (host.hostnames && !Array.isArray(host.hostnames) && host.hostnames.hostname) {
+      const hostnameArray = Array.isArray(host.hostnames.hostname) ? host.hostnames.hostname : [host.hostnames.hostname];
+      const primaryHostname = hostnameArray.find(h => h.type === 'user' || h.type === 'PTR');
       if (primaryHostname) {
         return primaryHostname.name;
       }
+  }
+
+
+  // 2. If not found, try to get from smb-os-discovery script
+  const hostScripts = getScripts(host);
+  const smbScript = hostScripts.find(s => s.id === 'smb-os-discovery');
+  if (smbScript) {
+    const output = smbScript.output;
+    const computerNameMatch = output.match(/Computer name: ([\w-]+)/);
+    if (computerNameMatch && computerNameMatch[1]) {
+      return computerNameMatch[1];
     }
   }
 
@@ -38,20 +84,6 @@ const getPorts = (host: Host | null): Port[] => {
     const ports = Array.isArray(host.ports.port) ? host.ports.port : [host.ports.port];
     return ports.filter(p => p.state.state === 'open');
 }
-
-const getScripts = (item: Port | Host): Script[] => {
-    const scriptsSource = 'hostscript' in item ? item.hostscript : item.script;
-    if (!scriptsSource) return [];
-    if (Array.isArray(scriptsSource)) {
-        return 'script' in scriptsSource[0] ? scriptsSource[0].script : scriptsSource;
-    }
-    if(typeof scriptsSource === 'object' && 'id' in scriptsSource) return [scriptsSource];
-    if(typeof scriptsSource === 'object' && 'script' in scriptsSource) {
-      if(Array.isArray(scriptsSource.script)) return scriptsSource.script;
-      return [scriptsSource.script];
-    }
-    return [];
-};
 
 type SortableKeys = 'port' | 'service' | 'version';
 type SortDirection = 'ascending' | 'descending';
@@ -187,5 +219,7 @@ export default function HostDetailDrawer() {
     </Sheet>
   );
 }
+
+    
 
     
