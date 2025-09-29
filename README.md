@@ -60,7 +60,7 @@ Abre [http://localhost:9002](http://localhost:9002) en tu navegador para ver el 
 ### Hosts más vulnerables
 **Analiza las Vulnerabilidades Principales:** El panel "Hosts Más Vulnerables" muestra los hosts con las puntuaciones de riesgo más altas. Haz clic en un host para ver una explicación generada por IA de sus vulnerabilidades.
 
-<img width="3801" height="1724" alt="image" src="https://github.com/user-attachments/assets/be912c32-1e00-430e-9762-7a650c1413a9" />
+<img width="3804" height="1724" alt="image" src="https://github.com/user-attachments/assets/3a5f3270-1f2d-49b0-ad06-8d20303b386f" />
 
 ### Todos los hosts
 **Explora Todos los Hosts:** Utiliza la tabla principal para navegar, ordenar y buscar entre todos los hosts del escaneo.
