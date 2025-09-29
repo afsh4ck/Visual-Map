@@ -25,6 +25,7 @@ cd Visual-Map
 # Configura la API de Gemini
 # Necesario para la generación de la descripción y pasos de pentesting con IA
 nano .env
+GEMINI_API_KEY={your-gemini-api-key}
 
 # Instalar dependencias
 npm install
