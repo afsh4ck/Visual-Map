@@ -1,8 +1,8 @@
 # Visual Map
 
-Visual Map es una plataforma web Next.js que te permite subir escaneos XML de Nmap y visualizar hosts, puertos abiertos y servicios de una manera gráfica y amigable.
+Visual Map es una plataforma web Next.js que te permite subir escaneos XML de Nmap y visualizar hosts, puertos abiertos y servicios de una manera gráfica y amigable. Esta aplicación incluye un módulo de inteligencia artificial con la API de Gemini para priorizar los hosts más vulnerables, facilitando la identificación y solución de riesgos de seguridad en grandes escaneos de red.
 
-Esta aplicación incluye un módulo de inteligencia artificial para priorizar los hosts más vulnerables, facilitando la identificación y solución de riesgos de seguridad en grandes escaneos de red.
+<img width="3799" height="1728" alt="image" src="https://github.com/user-attachments/assets/2427f6a4-6eaa-43b7-a7d2-969242273908" />
 
 ## Características
 
@@ -19,6 +19,11 @@ Esta aplicación incluye un módulo de inteligencia artificial para priorizar lo
 ```bash
 # Clona el repositorio
 git clone https://github.com/afsh4ck/Visual-Map.git
+cd Visual-Map
+
+# Configura tu API de Gemini
+nano .env
+GEMINI_API_KEY={your-gemini-api-key}
 
 # Instalar dependencias
 npm install
@@ -43,32 +48,42 @@ Abre [http://localhost:9002](http://localhost:9002) en tu navegador para ver el 
 
 ### Subida de escaneo XML
 **Sube un archivo XML de Nmap:** Arrastra y suelta tu archivo de resultados de escaneo de Nmap (en formato `.xml`) en la zona de carga, o haz clic para seleccionar un archivo.
-<img width="3834" height="1802" alt="image" src="https://github.com/user-attachments/assets/f4b3b5a2-1804-4d18-b2e7-cc5853f6ea3f" />
+
+<img width="3838" height="1670" alt="image" src="https://github.com/user-attachments/assets/da301ac1-65e4-4414-88e9-7c0690b412ca" />
 
 ### Dashboard Principal
 **Visualiza el Dashboard:** Una vez que el archivo se procesa, aparecerá el dashboard mostrando un resumen del escaneo.
-<img width="3840" height="1926" alt="image" src="https://github.com/user-attachments/assets/daa47370-376e-42cc-96a3-32c700dede32" />
+
+<img width="3799" height="1728" alt="image" src="https://github.com/user-attachments/assets/045ed26c-6fbe-4b22-8887-3f9183dac2c9" />
 
 ### Hosts más vulnerables
 **Analiza las Vulnerabilidades Principales:** El panel "Hosts Más Vulnerables" muestra los hosts con las puntuaciones de riesgo más altas. Haz clic en un host para ver una explicación generada por IA de sus vulnerabilidades.
-<img width="3840" height="1810" alt="image" src="https://github.com/user-attachments/assets/cde9cd7c-b02e-4908-92eb-af0d8433f4fb" />
+
+<img width="3796" height="1724" alt="image" src="https://github.com/user-attachments/assets/356fd4a6-3b54-46ab-947d-44134d4defd6" />
 
 ### Todos los hosts
 **Explora Todos los Hosts:** Utiliza la tabla principal para navegar, ordenar y buscar entre todos los hosts del escaneo.
-<img width="3840" height="1802" alt="image" src="https://github.com/user-attachments/assets/e7d3ae5f-51be-49ac-b6b1-bc8e6634e1d9" />
+
+<img width="3798" height="1725" alt="image" src="https://github.com/user-attachments/assets/45ee819a-fb73-4f2d-910a-ed5f629b1c74" />
 
 ### Detalles de host
 **Consulta los Detalles de cada Host:** Haz clic en cualquier host de la tabla para abrir una vista detallada con todos sus puertos y servicios asociados.
-<img width="3840" height="1808" alt="image" src="https://github.com/user-attachments/assets/ad07f01e-0228-4885-bff6-92d7a5d536d6" />
+
+<img width="3802" height="1713" alt="image" src="https://github.com/user-attachments/assets/32b59ca0-46bc-45a7-a274-0ecc84c75c70" />
+
+También generará con IA los próximos pasos del pentesting en base a las vulnerabilidades encontradas:
+
+<img width="2436" height="1316" alt="image" src="https://github.com/user-attachments/assets/4d6e27ad-59a9-44a4-94ab-8ce283d6cefa" />
 
 ### Puertos abiertos
 6. **Consulta todos los puertos abiertos:** Haz clic en la tarjeta de Puertos Abiertos para consultar todos los puertos abiertos de la infraestructura.
-<img width="3840" height="1808" alt="image" src="https://github.com/user-attachments/assets/c22d33b3-bd0b-486f-a2e3-f82aa4872890" />
+
+<img width="3805" height="1715" alt="image" src="https://github.com/user-attachments/assets/212a6d01-6eee-4787-aeb7-b7f15c913a59" />
 
 ### Servicios expuestos
 **Consulta todos los servicios expuestos:** Haz clic en la tarjeta de Servicios Únicos para consultar todos los servicios expuestos de la infraestructura.
-<img width="3840" height="1806" alt="image" src="https://github.com/user-attachments/assets/8f1368a1-7f11-43c2-bcb2-f043e208f93c" />
+
+<img width="3799" height="1722" alt="image" src="https://github.com/user-attachments/assets/1ad6bbeb-b012-44e9-b3f0-46feecb4858f" />
 
 ### Exporta los resultados
-**Exportación en JSON, HTML o PDF:** Haz clic en los botones del panel lateral para exportar los resultados.
-<img width="3840" height="1812" alt="image" src="https://github.com/user-attachments/assets/5d3cf96a-671b-4167-b7ca-bd24f8d1979e" />
+**Exportación en JSON, HTML o PDF:** Haz clic en los botones del panel lateral para exportar los resultados en JSON, PDF o HTML navegable. En el directorio /examples encontrarás informes de ejemplo, y un XML demo que puedes importar para ver los datos.
