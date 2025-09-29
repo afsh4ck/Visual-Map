@@ -82,7 +82,7 @@ Abre [http://localhost:9002](http://localhost:9002) en tu navegador para ver el 
 
 También generará con IA los próximos pasos del pentesting en base a las vulnerabilidades encontradas:
 
-<img width="2436" height="1316" alt="image" src="https://github.com/user-attachments/assets/4d6e27ad-59a9-44a4-94ab-8ce283d6cefa" />
+<img width="2166" height="1046" alt="image" src="https://github.com/user-attachments/assets/d116e7a0-ef7e-4e2a-b35f-bb75ed871131" />
 
 ### Puertos abiertos
 6. **Consulta todos los puertos abiertos:** Haz clic en la tarjeta de Puertos Abiertos para consultar todos los puertos abiertos de la infraestructura.
