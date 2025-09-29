@@ -88,14 +88,14 @@ También generará con IA los próximos pasos del pentesting en base a las vulne
 <img width="2166" height="1046" alt="image" src="https://github.com/user-attachments/assets/d116e7a0-ef7e-4e2a-b35f-bb75ed871131" />
 
 ### Puertos abiertos
-6. **Consulta todos los puertos abiertos:** Haz clic en la tarjeta de Puertos Abiertos para consultar todos los puertos abiertos de la infraestructura.
+**Consulta todos los puertos abiertos:** Haz clic en la tarjeta de Puertos Abiertos para consultar todos los puertos abiertos de la infraestructura.
 
 <img width="3805" height="1715" alt="image" src="https://github.com/user-attachments/assets/212a6d01-6eee-4787-aeb7-b7f15c913a59" />
 
 ### Servicios expuestos
 **Consulta todos los servicios expuestos:** Haz clic en la tarjeta de Servicios Únicos para consultar todos los servicios expuestos de la infraestructura.
 
-<img width="3799" height="1722" alt="image" src="https://github.com/user-attachments/assets/1ad6bbeb-b012-44e9-b3f0-46feecb4858f" />
+<img width="3840" height="1804" alt="image" src="https://github.com/user-attachments/assets/134e4fca-d088-4940-9fe8-e967443c572e" />
 
 ### Exporta los resultados
 **Exportación en JSON, HTML o PDF:** Haz clic en los botones del panel lateral para exportar los resultados en JSON, PDF o HTML navegable. En el directorio /examples encontrarás informes de ejemplo, y un XML demo que puedes importar para ver los datos.
