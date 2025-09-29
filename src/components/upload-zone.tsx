@@ -86,9 +86,9 @@ export default function UploadZone({ getRootProps, getInputProps, isDragActive }
               </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4 flex-1 overflow-y-auto">
-              <NmapCommand title={t('subdomainScanTitle')} command={subdomainScanCommand} />
               <NmapCommand title={t('infraScanTitle')} command={infraScanCommand} />
               <NmapCommand title={t('hostScanTitle')} command={hostScanCommand} />
+              <NmapCommand title={t('subdomainScanTitle')} command={subdomainScanCommand} />
           </CardContent>
       </Card>
     </div>
