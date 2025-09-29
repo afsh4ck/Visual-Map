@@ -96,3 +96,6 @@ También generará con IA los próximos pasos del pentesting en base a las vulne
 
 ### Exporta los resultados
 **Exportación en JSON, HTML o PDF:** Haz clic en los botones del panel lateral para exportar los resultados en JSON, PDF o HTML navegable. En el directorio /examples encontrarás informes de ejemplo, y un XML demo que puedes importar para ver los datos.
+
+<img width="3838" height="1812" alt="image" src="https://github.com/user-attachments/assets/9947ca67-8b1d-435b-8360-f2a0d4e2a495" />
+
