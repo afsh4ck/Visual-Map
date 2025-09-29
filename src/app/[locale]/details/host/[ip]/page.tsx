@@ -37,6 +37,18 @@ const getHostname = (host: Host | null): string => {
   return 'N/A';
 };
 
+const getOsName = (host: Host | null): string => {
+    if (!host || !host.os || !host.os.osmatch) {
+        return 'N/A';
+    }
+    const osMatches = Array.isArray(host.os.osmatch) ? host.os.osmatch : [host.os.osmatch];
+    if (osMatches.length > 0) {
+        const bestMatch = osMatches.reduce((prev, current) => (parseInt(prev.accuracy) > parseInt(current.accuracy)) ? prev : current);
+        return bestMatch.name;
+    }
+    return 'N/A';
+};
+
 const getPorts = (host: Host | null): Port[] => {
     if (!host || !host.ports || !host.ports.port) return [];
     const ports = Array.isArray(host.ports.port) ? host.ports.port : [host.ports.port];
@@ -158,6 +170,7 @@ export default function HostDetailPage({ params }: { params: { ip: string } }) {
   const riskScore = host.riskScore ?? 0;
   const hostname = getHostname(host);
   const hasHostname = hostname !== 'N/A';
+  const osName = getOsName(host);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -265,6 +278,14 @@ export default function HostDetailPage({ params }: { params: { ip: string } }) {
                             </Badge>
                         </div>
                         <VulnerabilityExplanation host={host} />
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>{tDetails('os')}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-sm">{osName}</p>
                     </CardContent>
                 </Card>
             </div>
