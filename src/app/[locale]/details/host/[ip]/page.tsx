@@ -236,7 +236,7 @@ export default function HostDetailPage({ params }: { params: { ip: string } }) {
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>Scripts NSE ({hostScripts.length})</CardTitle>
+                        <CardTitle>{t('nseScripts')} ({hostScripts.length})</CardTitle>
                     </CardHeader>
                     <CardContent>
                     {hostScripts.length > 0 ? (
@@ -245,7 +245,7 @@ export default function HostDetailPage({ params }: { params: { ip: string } }) {
                                 <div key={`${script.id}-${index}`}>
                                     <h4 className="font-semibold">{script.id}</h4>
                                     <pre className="mt-2 rounded-md bg-muted p-4 text-xs font-code overflow-x-auto">
-                                        <code>{script.output}</code>
+                                        <code>{script.output.replace(/&#xa;/g, '\n')}</code>
                                     </pre>
                                 </div>
                             ))}
@@ -302,3 +302,5 @@ export default function HostDetailPage({ params }: { params: { ip: string } }) {
     </div>
   );
 }
+
+    
