@@ -8,7 +8,7 @@ import AppHeader from '@/components/layout/header';
 import AppFooter from '@/components/layout/footer';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Server, ArrowUpDown } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
@@ -86,6 +86,7 @@ export default function HostDetailPage({ params }: { params: { ip: string } }) {
   const { scanResult, clearScanResult, setSelectedHost } = useScanStore();
   const t = useTranslations('HostDetail');
   const tDetails = useTranslations('DetailsPage');
+  const locale = useLocale();
   const [sortConfig, setSortConfig] = useState<{ key: SortableKeys; direction: SortDirection } | null>(null);
 
   useEffect(() => {
@@ -258,7 +259,12 @@ export default function HostDetailPage({ params }: { params: { ip: string } }) {
                 <Card>
                     <CardHeader>
                         <CardTitle>{t('nextStepsTitle')}</CardTitle>
-                        <CardDescription>{t('nextStepsDescription')}</CardDescription>
+                         <CardDescription>
+                            {locale === 'es' 
+                                ? "Sugerencias generadas por IA para pruebas de penetración."
+                                : "AI-generated suggestions for penetration testing."
+                            }
+                        </CardDescription>
                     </CardHeader>
                     <CardContent>
                         <PentestingNextSteps host={host} />
@@ -296,3 +302,5 @@ export default function HostDetailPage({ params }: { params: { ip: string } }) {
     </div>
   );
 }
+
+    
