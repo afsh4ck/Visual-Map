@@ -15,6 +15,7 @@ const options = {
   isArray: (name: string, jpath: string) => {
     const arrayPaths = [
       'nmaprun.host',
+      'nmaprun.host.address',
       'nmaprun.host.ports.port',
       'nmaprun.host.hostnames.hostname',
       'nmaprun.host.ports.port.script',

@@ -66,7 +66,7 @@ export interface Os {
 export interface Host {
   starttime: string;
   endtime: string;
-  address: Address;
+  address: Address[];
   hostnames: Hostnames | Hostnames[];
   ports: Ports;
   status: Status;

@@ -153,6 +153,16 @@ export function calculateRiskScore(host: Host, weights: RiskWeights): { score: n
 
 export function calculateRiskScores(hosts: Host[], weights: RiskWeights): Host[] {
   return hosts.map((host) => {
+    if (!host.address || host.address.length === 0) {
+      // Create a dummy address if it's missing, to avoid crashes.
+      // This is a workaround for potentially malformed XML.
+      return {
+        ...host,
+        address: [{ addr: 'N/A', addrtype: 'unknown' }],
+        riskScore: 0,
+        riskFactors: ['Missing IP Address'],
+      }
+    }
     const { score, factors } = calculateRiskScore(host, weights);
     return {
       ...host,
