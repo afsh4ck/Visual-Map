@@ -83,4 +83,4 @@ Abre [http://localhost:9002](http://localhost:9002) en tu navegador para ver el 
 <img width="3799" height="1729" alt="image" src="https://github.com/user-attachments/assets/89eb8011-4e7a-454f-a0e5-f0822ea4e808" />
 
 ### Exporta los resultados
-**Exportación en JSON, HTML o PDF:** Haz clic en los botones del panel lateral para exportar los resultados. Puedes ver informes de prueba en el directorio /examples. Además encontrarás un xml de prueba que puedes importar para ver losa datos.
+**Exportación en JSON, HTML o PDF:** Haz clic en los botones del panel lateral para exportar los resultados. Puedes ver informes de prueba en el directorio /examples. Además encontrarás un xml de prueba que puedes importar para ver los datos.
