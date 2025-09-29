@@ -23,7 +23,7 @@ git clone https://github.com/afsh4ck/Visual-Map.git
 cd Visual-Map
 
 # Configura la API de Gemini
-# Necesario para la generación de la descripción y pasos de pentesting con IA
+# Necesario para la generación de la descripción de cada host y pentesting con IA
 nano .env
 GEMINI_API_KEY={your-gemini-api-key}
 
