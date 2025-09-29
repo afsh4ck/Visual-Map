@@ -15,8 +15,8 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import HostDetailDrawer from '@/components/dashboard/host-detail-drawer';
 
-export default function DetailsPage({ params }: { params: { slug: string[] } }) {
-  const { slug } = params;
+export default function DetailsPage({ params }: { params: { slug: string[], locale: string } }) {
+  const { slug, locale } = params;
   const page = slug[0] || 'hosts';
   const { scanResult, clearScanResult, setSelectedHost } = useScanStore();
   const router = useRouter();
@@ -39,11 +39,13 @@ export default function DetailsPage({ params }: { params: { slug: string[] } }) 
   };
   
   const getPageTitle = () => {
+    if (page === 'vulnerabilities') {
+      return locale === 'es' ? 'Vulnerabilidades' : 'Vulnerabilities';
+    }
     const pageTitles: { [key: string]: string } = {
       hosts: t('hosts'),
       ports: t('openPorts'),
       services: t('services'),
-      vulnerabilities: t('vulnerabilities'),
     };
     return pageTitles[page] || t('pageNotFound');
   }
