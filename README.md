@@ -53,8 +53,8 @@ sudo nmap -v -A 10.0.0.0/24 -oX scan.xml
 # Escaneo de host completo
 sudo nmap -v -A 10.0.0.1 -oX scan.xml
 
-# Escaneo de subdominios
-sudo nmap -v -A -iL subdomains.txt -oX scan.xml
+# Escaneo mediante listado de IPs
+sudo nmap -v -A -iL targets.txt -oX scan.xml
 ```
 
 Abre [http://localhost:9002](http://localhost:9002) en tu navegador para ver el resultado.
