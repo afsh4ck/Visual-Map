@@ -20,12 +20,13 @@ export default function LanguageSwitcher() {
   const pathname = usePathname();
   const locale = useLocale();
   const t = useTranslations('Header');
-  const { clearExplanationCache, clearPentestingStepsCache } = useScanStore();
+  const { clearExplanationCache, clearPentestingStepsCache, clearNseSummaryCache } = useScanStore();
   const [isPending, startTransition] = useTransition();
 
   const changeLocale = (newLocale: 'en' | 'es') => {
     clearExplanationCache();
     clearPentestingStepsCache();
+    clearNseSummaryCache();
     startTransition(() => {
       router.push(pathname, { locale: newLocale });
     });
