@@ -143,7 +143,7 @@ export default function ServicesDetailView({ hosts, pdfMode = false }: { hosts: 
     return Object.entries(counts).map(([name, value]) => ({ name, value })).sort((a,b) => b.value - a.value);
   }, [allServices]);
   
-  const riskScoreTitle = t('riskScore');
+  const riskScoreTitle = locale === 'es' ? 'Puntaje de Riesgo' : 'Risk Score';
 
   const handleRowClick = (hostIp: string) => {
     router.push(`/details/host/${hostIp}`);
