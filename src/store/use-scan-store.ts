@@ -3,6 +3,7 @@ import { create } from 'zustand';
 import type { Host } from '@/types/nmap';
 import type { ExplainVulnerabilityRiskOutput } from '@/ai/types';
 import type { PentestingNextStepsOutput } from '@/actions/get-pentesting-steps';
+import type { NseScriptsSummaryOutput } from '@/actions/summarize-nse-scripts';
 import { calculateRiskScores } from '@/lib/risk-scorer';
 
 export type RiskWeights = {
@@ -35,6 +36,7 @@ type ScanState = {
   selectedHost: Host | null;
   explanationCache: Map<string, ExplainVulnerabilityRiskOutput>;
   pentestingStepsCache: Map<string, PentestingNextStepsOutput>;
+  nseSummaryCache: Map<string, NseScriptsSummaryOutput>;
   riskWeights: RiskWeights;
   setScanResult: (fileName: string, hosts: Host[], weights?: RiskWeights, resetCache?: boolean) => void;
   clearScanResult: () => void;
@@ -43,6 +45,8 @@ type ScanState = {
   clearExplanationCache: () => void;
   setPentestingSteps: (cacheKey: string, steps: PentestingNextStepsOutput) => void;
   clearPentestingStepsCache: () => void;
+  setNseSummary: (cacheKey: string, summary: NseScriptsSummaryOutput) => void;
+  clearNseSummaryCache: () => void;
   setRiskWeights: (weights: RiskWeights) => void;
 };
 
@@ -73,6 +77,7 @@ export const useScanStore = create<ScanState>((set, get) => ({
   selectedHost: null,
   explanationCache: new Map(),
   pentestingStepsCache: new Map(),
+  nseSummaryCache: new Map(),
   riskWeights: defaultRiskWeights,
   setScanResult: (fileName, hosts, weights, resetCache = true) => {
     const finalWeights = weights || get().riskWeights;
@@ -96,10 +101,11 @@ export const useScanStore = create<ScanState>((set, get) => ({
     if (resetCache) {
       newState.explanationCache = new Map();
       newState.pentestingStepsCache = new Map();
+      newState.nseSummaryCache = new Map();
     }
     set(newState);
   },
-  clearScanResult: () => set({ scanResult: null, selectedHost: null, explanationCache: new Map(), pentestingStepsCache: new Map(), riskWeights: defaultRiskWeights }),
+  clearScanResult: () => set({ scanResult: null, selectedHost: null, explanationCache: new Map(), pentestingStepsCache: new Map(), nseSummaryCache: new Map(), riskWeights: defaultRiskWeights }),
   setSelectedHost: (host) => set({ selectedHost: host }),
   setExplanation: (cacheKey, explanation) => set((state) => ({
     explanationCache: new Map(state.explanationCache).set(cacheKey, explanation),
@@ -109,5 +115,9 @@ export const useScanStore = create<ScanState>((set, get) => ({
     pentestingStepsCache: new Map(state.pentestingStepsCache).set(cacheKey, steps),
   })),
   clearPentestingStepsCache: () => set({ pentestingStepsCache: new Map() }),
+  setNseSummary: (cacheKey, summary) => set((state) => ({
+    nseSummaryCache: new Map(state.nseSummaryCache).set(cacheKey, summary),
+  })),
+  clearNseSummaryCache: () => set({ nseSummaryCache: new Map() }),
   setRiskWeights: (weights: RiskWeights) => set({ riskWeights: weights }),
 }));
