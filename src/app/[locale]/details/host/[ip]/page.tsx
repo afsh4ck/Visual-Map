@@ -15,6 +15,7 @@ import { Badge } from '@/components/ui/badge';
 import type { Host, Port, Script } from '@/types/nmap';
 import { VulnerabilityExplanation } from '@/components/dashboard/vulnerability-explanation';
 import { PentestingNextSteps } from '@/components/details/pentesting-next-steps';
+import { NseSummary } from '@/components/details/nse-summary';
 import { cn } from '@/lib/utils';
 
 const getScripts = (item: Port | Host): Script[] => {
@@ -269,7 +270,7 @@ export default function HostDetailPage({ params }: { params: { ip: string } }) {
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>{t('nseScripts')} ({hostScripts.length})</CardTitle>
+                        <CardTitle>{locale === 'es' ? 'Scripts NSE' : 'NSE Scripts'} ({hostScripts.length})</CardTitle>
                     </CardHeader>
                     <CardContent>
                     {hostScripts.length > 0 ? (
@@ -286,6 +287,21 @@ export default function HostDetailPage({ params }: { params: { ip: string } }) {
                     ) : (
                         <p className="text-sm text-muted-foreground text-center">{t('noNseScripts')}</p>
                     )}
+                    </CardContent>
+                </Card>
+                
+                <Card>
+                    <CardHeader>
+                        <CardTitle>{locale === 'es' ? 'Resumen de Scripts NSE' : 'AI-Powered NSE Script Summary'}</CardTitle>
+                        <CardDescription>
+                            {locale === 'es' 
+                                ? 'Resumen con IA de la información recopilada' 
+                                : 'AI summary of the collected information'
+                            }
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <NseSummary host={host} />
                     </CardContent>
                 </Card>
 
@@ -335,7 +351,5 @@ export default function HostDetailPage({ params }: { params: { ip: string } }) {
     </div>
   );
 }
-
-    
 
     
