@@ -4,7 +4,7 @@
 import type { DropzoneRootProps, DropzoneInputProps } from 'react-dropzone';
 import { UploadCloud, Terminal, Copy, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { useState } from 'react';
@@ -57,9 +57,11 @@ const NmapCommand = ({ title, command }: { title: string, command: string }) => 
 
 export default function UploadZone({ getRootProps, getInputProps, isDragActive }: UploadZoneProps) {
   const t = useTranslations('UploadZone');
-  const subdomainScanCommand = "sudo nmap -v -A -iL targets.txt -oX scan.xml";
+  const locale = useLocale();
+  const ipListScanCommand = "sudo nmap -v -A -iL targets.txt -oX scan.xml";
   const infraScanCommand = "sudo nmap -v -A 10.0.0.0/24 -oX scan.xml";
   const hostScanCommand = "sudo nmap -v -A 10.0.0.1 -oX scan.xml";
+  const ipListScanTitle = locale === 'es' ? "Escaneo mediante listado de IPs" : "Scan from IP list";
 
   return (
     <div className="flex flex-col md:flex-row items-center justify-center h-[calc(100vh-200px)] gap-8 p-4 md:p-8">
@@ -88,7 +90,7 @@ export default function UploadZone({ getRootProps, getInputProps, isDragActive }
           <CardContent className="space-y-4 flex-1 overflow-y-auto">
               <NmapCommand title={t('infraScanTitle')} command={infraScanCommand} />
               <NmapCommand title={t('hostScanTitle')} command={hostScanCommand} />
-              <NmapCommand title={t('subdomainScanTitle')} command={subdomainScanCommand} />
+              <NmapCommand title={ipListScanTitle} command={ipListScanCommand} />
           </CardContent>
       </Card>
     </div>
