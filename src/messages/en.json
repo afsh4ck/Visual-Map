@@ -28,6 +28,10 @@
     "highRiskHosts": "High-Risk Hosts",
     "highRiskHostsDescription": "hosts with risk score >= 75"
   },
+  "RiskRanking": {
+    "title": "Top Vulnerable Hosts",
+    "noVulnerableHosts": "No vulnerable hosts found or scan not loaded."
+  },
   "HostsTable": {
     "title": "All Hosts",
     "ipAddress": "IP Address",
@@ -46,7 +50,7 @@
     "riskAnalysisTitle": "Risk Analysis",
     "riskScore": "Risk Score",
     "nextStepsTitle": "Pentesting Next Steps",
-    "nextStepsDescription": "AI-generated suggestions for further testing.",
+    "nextStepsDescription": "AI-generated suggestions for penetration testing.",
     "generatingNextSteps": "Generating next steps...",
     "noNextSteps": "No specific next steps could be generated for this host."
   },
@@ -95,6 +99,7 @@
     "service": "Service",
     "product": "Product",
     "version": "Version",
+    "riskScore": "Risk Score",
     "serviceDistributionTitle": "Service Distribution",
     "allServicesTitle": "All {count} Detected Services",
     "hostRiskDistributionTitle": "Host Risk Distribution",
