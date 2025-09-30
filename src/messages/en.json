@@ -52,7 +52,10 @@
     "nextStepsTitle": "Pentesting Next Steps",
     "nextStepsDescription": "AI-generated suggestions for penetration testing.",
     "generatingNextSteps": "Generating next steps...",
-    "noNextSteps": "No specific next steps could be generated for this host."
+    "noNextSteps": "No specific next steps could be generated for this host.",
+    "nseSummaryTitle": "AI-Powered NSE Script Summary",
+    "nseSummaryDescription": "AI summary of the collected information",
+    "generatingNseSummary": "Generating NSE script summary..."
   },
   "VulnerabilityExplanation": {
     "errorTitle": "Error",
@@ -111,3 +114,5 @@
     "highRisk": "High Risk"
   }
 }
+
+    
