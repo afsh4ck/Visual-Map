@@ -11,7 +11,7 @@
     "subtitle": "o haz clic para explorar",
     "caption": "Solo se admiten archivos *.xml",
     "examplesTitle": "Cómo generar el archivo XML",
-    "subdomainScanTitle": "Escaneo de subdominios",
+    "subdomainScanTitle": "Escaneo mediante listado de IPs",
     "infraScanTitle": "Escaneo de infraestructura completa",
     "hostScanTitle": "Escaneo de host completo"
   },
