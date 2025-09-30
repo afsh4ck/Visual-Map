@@ -11,7 +11,7 @@
     "subtitle": "or click to browse",
     "caption": "Only *.xml files are supported",
     "examplesTitle": "How to generate the XML file",
-    "subdomainScanTitle": "Subdomain scan",
+    "subdomainScanTitle": "Scan from IP list",
     "infraScanTitle": "Full infrastructure scan",
     "hostScanTitle": "Full host scan"
   },
