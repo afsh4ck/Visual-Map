@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from '@/navigation';
 import { cn } from '@/lib/utils';
 import { ArrowUpDown } from 'lucide-react';
@@ -114,6 +114,7 @@ export default function VulnerabilitiesDetailView({ hosts, pdfMode = false }: { 
     const tHostsTable = useTranslations('HostsTable');
     const router = useRouter();
     const [sortConfig, setSortConfig] = useState<{ key: SortableKeys; direction: SortDirection } | null>({ key: 'riskScore', direction: 'descending' });
+    const locale = useLocale();
 
     const vulnerableHosts = useMemo(() => 
         hosts.filter(h => (h.riskScore ?? 0) >= 70)
@@ -185,12 +186,12 @@ export default function VulnerabilitiesDetailView({ hosts, pdfMode = false }: { 
         const veryLowRisk = hosts.filter(h => (h.riskScore ?? 0) === 0).length;
         
         return [
-            { name: t('veryLowRisk'), count: veryLowRisk, fill: '#6B7280' }, // Gray
-            { name: t('lowRisk'), count: lowRisk, fill: '#FBBF24' }, // Yellow - Corrected from green as per risk score logic.
-            { name: t('mediumRisk'), count: mediumRisk, fill: '#F97316' }, // Orange
-            { name: t('highRisk'), count: highRisk, fill: '#EF4444' }, // Red
+            { name: locale === 'es' ? 'Riesgo Muy Bajo' : 'Very Low Risk', count: veryLowRisk, fill: '#6B7280' },
+            { name: locale === 'es' ? 'Riesgo Bajo' : 'Low Risk', count: lowRisk, fill: '#FBBF24' },
+            { name: locale === 'es' ? 'Riesgo Medio' : 'Medium Risk', count: mediumRisk, fill: '#F97316' },
+            { name: locale === 'es' ? 'Riesgo Alto' : 'High Risk', count: highRisk, fill: '#EF4444' },
         ].filter(item => item.count > 0);
-    }, [hosts, t]);
+    }, [hosts, locale]);
 
     const handleRowClick = (host: Host) => {
       router.push(`/details/host/${host.address[0].addr}`);
